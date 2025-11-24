@@ -1,0 +1,5 @@
+common --enable_bzlmod ## enable bzlmod for all commands
+build --sandbox_debug ## enable debug info for build command
+build --compilation_mode=fastbuild ## fastbuild -> with debug info, not optimized, opt -> no debug info, optimized, dbg -> debug run
+common --announce_rc ## when executing bazel, show which .bazelrc is used
+test --test_output=errors ## errors -> show only errors, all -> show all outputs, summary -> show summary

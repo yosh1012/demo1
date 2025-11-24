@@ -1,0 +1,61 @@
+module(
+    name = "demo1",
+    version = "0.1.0",
+)
+
+bazel_dep(name = "aspect_bazel_lib", version = "1.42.2") # for extent bazel build rules
+bazel_dep(name = "aspect_rules_js", version = "1.40.0") # to build JS and TypeScript
+bazel_dep(name = "rules_nodejs", version = "6.0.0") # to build nodeJS
+
+bazel_dep(name = "rules_scala", version = "7.0.0") # build rules for scala (need for scala build)
+bazel_dep(name = "rules_jvm_external", version = "6.3") # using maven repo for extensions
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven") ## using rules_jvm_external
+maven.install(
+    name = "maven_demo1",
+    artifacts = [
+        "org.apache.pekko:pekko-actor_2.13:1.0.3", ## pekko actor lib, to implement actor model/ message based async functions
+        "org.apache.pekko:pekko-actor-typed_2.13:1.0.3", ## pekko actor lib, to implement strict typed
+        "org.apache.pekko:pekko-stream_2.13:1.0.3", ## pekko lib to handle stream (for much amount of data)
+        "org.apache.pekko:pekko-http-core_2.13:1.0.1", ## pekko core (low layer)
+        "org.apache.pekko:pekko-http_2.13:1.0.1", ## pekko core
+        "org.apache.pekko:pekko-http-spray-json_2.13:1.0.1", ## integration between pekko and spray JSON
+        "io.spray:spray-json_2.13:1.3.6", # Spray JSON lib (compiling JSON as Scala objects) marshalling/ unmarshalling
+        "com.typesafe.slick:slick_2.13:3.5.0", # Slick lib, to write SQL in Scala
+        "com.typesafe.slick:slick-hikaricp_2.13:3.5.0", # integration between Slick and HikariCP/ connection pool
+        "org.postgresql:postgresql:42.7.1", # PostgreSQL
+        "com.github.jwt-scala:jwt-core_2.13:9.4.5", # JWT lib
+        "org.mindrot:jbcrypt:0.4", #bccrypt lib, for shadow passwords
+        "ch.qos.logback:logback-classic:1.4.14", # logging lib for Java (Simple Logging Facade for Java)
+        "com.typesafe.scala-logging:scala-logging_2.13:3.9.5", # logger wrapper for Scala
+        "com.typesafe:config:1.4.3", # typesafe config
+        "org.scalatest:scalatest_2.13:3.2.17", # scala test lib
+        "org.apache.pekko:pekko-http-testkit_2.13:1.0.1", # pekko http test kit
+        "org.apache.pekko:pekko-actor-testkit-typed_2.13:1.0.3", # pekko actor test kit
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+)
+use_repo(maven, "maven_demo1") # publish the repo as maven_demo1
+
+scala_config = use_extension("@rules_scala//scala/extensions:config.bzl", "scala_config") # using scala config extensions
+scala_config.settings(scala_version = "2.13.16")
+
+scala_deps = use_extension("@rules_scala//scala/extensions:deps.bzl", "scala_deps") # extend scala dependencies
+scala_deps.scala() # allows scala compiling in this project with Bazel tool chain
+
+npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True) # npm settings
+npm.npm_translate_lock(
+    name = "npm_web",
+    npm_package_lock = "//web:package-lock.json",
+    pnpm_lock = "//web:pnpm-lock.yaml",
+)
+
+npm.npm_translate_lock(
+    name = "npm_mobile",
+    npm_package_lock = "//mobile:package-lock.json",
+    pnpm_lock = "//mobile:pnpm-lock.yaml",
+)
+use_repo(npm, "npm_web", "npm_mobile")
+
