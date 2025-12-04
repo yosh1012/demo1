@@ -5,7 +5,7 @@
 user account information and session store
 
 - users
-- user_sessions
+- user_sessions(physical delete)
 
 ## SUBSCRIPTION
 
