@@ -31,7 +31,7 @@ erDiagram
 
         BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
     }
-    
+        
     subscription_plans {
         INT spl_id PK
 
@@ -72,6 +72,8 @@ erDiagram
     organizations_users {
         BIGSERIAL org_usr_id PK
 
+        BOOLEAN org_usr_is_admin "NOT NULL, DEFAULT false"
+
         TIMESTAMP org_usr_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP org_usr_updated_at
         TIMESTAMP org_usr_deleted_at
@@ -87,6 +89,7 @@ erDiagram
         TEXT wks_description
         BOOLEAN wks_is_archived "NOT NULL, DEFAULT false"
         TIMESTAMP wks_archived_at
+        BOOLEAN wks_is_opened "NOT NULL, DEFAULT false"
         
         TIMESTAMP wks_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP wks_updated_at
@@ -99,6 +102,8 @@ erDiagram
 
     workspaces_users{
         BIGSERIAL wks_usr_id PK
+
+        BOOLEAN wks_usr_is_admin "NOT NULL, DEFAULT false"
         
         TIMESTAMP wks_usr_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP wks_usr_updated_at
@@ -126,6 +131,9 @@ erDiagram
 
     projects_users{
         BIGSERIAL prj_usr_id PK
+
+        BOOLEAN prj_usr_is_admin "NOT NULL, DEFAULT false"
+        BOOLEAN prj_usr_is_contributor "NOT NULL, DEFAULT false"
         
         TIMESTAMP prj_usr_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP prj_usr_updated_at
@@ -134,7 +142,7 @@ erDiagram
         BIGINT prj_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
         BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX, UNIQUE(prj_id, usr_id) WHERE prj_usr_deleted_at IS NULL"
     }
-
+    
     tasks{
         BIGSERIAL tsk_id PK
 
@@ -308,6 +316,7 @@ erDiagram
     subgraph "Authentication & User Management"
         users
         user_sessions
+        roles
     end
     
     subgraph "Subscription & Organization"
@@ -351,6 +360,10 @@ erDiagram
         work_times
     end
 
+    roles ||--o{ organizations_users : "rol_id"
+    roles ||--o{ workspaces_users : "rol_id"
+    roles ||--o{ projects_users : "rol_id"
+
     users ||--o{ user_sessions : "usr_id"
     users ||--o{ organizations : "usr_id"
     users ||--o{ organizations_users : "usr_id"
@@ -372,6 +385,7 @@ erDiagram
 
     organizations_users }o--|| organizations : "org_id"
     organizations_users }o--|| users : "usr_id"
+    organizations_users }o--|| roles : "rol_id"
 
     workspaces ||--o{ workspaces_users : "wks_id"
     workspaces ||--o{ projects : "wks_id"
@@ -379,6 +393,7 @@ erDiagram
 
     workspaces_users }o--|| workspaces : "wks_id"
     workspaces_users }o--|| users : "usr_id"
+    workspaces_users }o--|| roles : "rol_id"
 
     projects ||--o{ projects_users : "prj_id"
     projects ||--o{ sprints : "prj_id"
@@ -387,6 +402,7 @@ erDiagram
 
     projects_users }o--|| projects : "prj_id"
     projects_users }o--|| users : "usr_id"
+    projects_users }o--|| roles : "rol_id"
 
     task_status ||--o{ tasks : "tst_id"
 
