@@ -24,7 +24,7 @@ erDiagram
 
         TEXT ssn_jwt_refresh_token "NOT NULL"
         TIMESTAMP ssn_will_expire_at "NOT NULL, INDEX"
-        TIMESTAMP ssn_last_accessed_at "NOT NULL, DEFAULT CURRENT TIMESTAMP"
+        TIMESTAMP ssn_last_accessed_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
 
         TIMESTAMP ssn_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP ssn_updated_at
@@ -57,7 +57,7 @@ erDiagram
         BOOLEAN org_is_active "NOT NULL"
         DATE org_subscription_started_date
         DATE org_subscription_end_date
-        SUBSCRIPTION_STATUS org_subscription_status "CREATE TYPE subscription_status AS ENUM('active', 'canceled', 'expired', 'trial')"
+        SUBSCRIPTION_STATUS org_subscription_status "CREATE TYPE subscription_status AS ENUM('active', 'canceled', 'expired', 'trial', 'unpaid')"
         BOOLEAN org_subscription_is_autorenew "NOT NULL, DEFAULT true"
         TIMESTAMP org_subscription_canceled_at
 
@@ -65,7 +65,7 @@ erDiagram
         TIMESTAMP org_updated_at
         TIMESTAMP org_deleted_at
 
-        INT spl_id FK "NOT NULL, INDEX"
+        INT spl_id FK "NOT NULL"
         BIGINT usr_id FK "NOT NULL, INDEX"
     }
 
@@ -79,7 +79,7 @@ erDiagram
         TIMESTAMP org_usr_deleted_at
 
         BIGINT org_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
-        BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX, UNIQUE(org_id, usr_id) WHERE org_usr_deleted_at IS NULL"
+        BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, UNIQUE WHERE org_usr_deleted_at IS NULL"
     }
 
     workspaces {
@@ -148,9 +148,11 @@ erDiagram
 
         VARCHAR(255) tsk_name "NOT NULL"
         TEXT tsk_description
+        BIGINT tsk_description_version "NOT NULL, DEFAULT 1 (New: Realtime Edit)"
         DATE tsk_start_date
         DATE tsk_due_date
         DECIMAL tsk_estimated_hours
+        TASK_STATUS tsk_status "NOT NULL, CREATE TYPE task_status AS ENUM('todo', 'in_progress', 'in_review', 'pending', 'done')"
 
         TIMESTAMP tsk_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP tsk_updated_at
@@ -158,7 +160,6 @@ erDiagram
 
         BIGINT wks_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
         BIGINT spr_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
-        INT tst_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
     }
 
     tasks_users{
@@ -195,18 +196,6 @@ erDiagram
         BIGINT tsc_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
     }
 
-    task_status{
-        SERIAL tst_id PK
-
-        VARCHAR(55) tst_name "NOT NULL"
-        VARCHAR(55) tst_display_name_en "NOT NULL"
-        VARCHAR(55) tst_display_name_ja "NOT NULL"
-
-        TIMESTAMP tst_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
-        TIMESTAMP tst_updated_at
-        TIMESTAMP tst_deleted_at
-    }
-
     sprints{
         BIGSERIAL spr_id PK
 
@@ -230,23 +219,16 @@ erDiagram
         TIMESTAMP cmt_deleted_at
 
         BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
-    }
-
-    tasks_comments{
-        BIGSERIAL tsk_cmt_id PK
-
-        TIMESTAMP tsk_cmt_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
-        TIMESTAMP tsk_cmt_updated_at
-        TIMESTAMP tsk_cmt_deleted_at
-
-        BIGINT tsk_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
-        BIGINT cmt_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
+        BIGINT tsk_id FK "Direct Link to Task"
     }
 
     attachments{
         BIGSERIAL atc_id PK
 
         VARCHAR(255) atc_url "NOT NULL"
+        VARCHAR(255) atc_file_name "New: Metadata"
+        BIGINT atc_file_size "New: Metadata"
+        VARCHAR(100) atc_mime_type "New: Metadata"
 
         TIMESTAMP atc_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP atc_updated_at
@@ -254,7 +236,7 @@ erDiagram
 
         BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
         BIGINT tsk_id FK "NOT NULL, ON DELETE CASCADE, INDEX" 
-        BIGINT cmt_id_attached FK
+        BIGINT cmt_id FK
     }
 
     notifications{
@@ -263,25 +245,13 @@ erDiagram
         TEXT ntf_content
         BOOLEAN ntf_is_read "NOT NULL"
         TIMESTAMP ntf_read_at
+        NOTIFICATION_LEVEL ntf_level "NOT NULL, CREATE TYPE notification_level AS ENUM('appinfo', 'mention', 'assign', 'remind', 'alert')"
 
         TIMESTAMP ntf_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
         TIMESTAMP ntf_updated_at
         TIMESTAMP ntf_deleted_at
 
-        INT ntl_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
         BIGINT usr_id FK "NOT NULL, ON DELETE CASCADE, INDEX"
-    }
-
-    notification_levels {
-        SERIAL ntl_id PK
-
-        VARCHAR(55) ntl_name "NOT NULL"
-        VARCHAR(55) ntl_display_name_en "NOT NULL"
-        VARCHAR(55) ntl_display_name_ja "NOT NULL"
-
-        TIMESTAMP ntl_created_at "NOT NULL, DEFAULT CURRENT_TIMESTAMP"
-        TIMESTAMP ntl_updated_at
-        TIMESTAMP ntl_deleted_at
     }
 
     activity_logs{
@@ -316,7 +286,6 @@ erDiagram
     subgraph "Authentication & User Management"
         users
         user_sessions
-        roles
     end
     
     subgraph "Subscription & Organization"
@@ -337,7 +306,6 @@ erDiagram
     end
     
     subgraph "Task Management"
-        task_status
         tasks
         tasks_users
         task_categories
@@ -346,12 +314,10 @@ erDiagram
     
     subgraph "Comments & Attachments"
         comments
-        tasks_comments
         attachments
     end
     
     subgraph "Notifications & Activity"
-        notification_levels
         notifications
         activity_logs
     end
@@ -359,10 +325,6 @@ erDiagram
     subgraph "Time Tracking"
         work_times
     end
-
-    roles ||--o{ organizations_users : "rol_id"
-    roles ||--o{ workspaces_users : "rol_id"
-    roles ||--o{ projects_users : "rol_id"
 
     users ||--o{ user_sessions : "usr_id"
     users ||--o{ organizations : "usr_id"
@@ -385,7 +347,6 @@ erDiagram
 
     organizations_users }o--|| organizations : "org_id"
     organizations_users }o--|| users : "usr_id"
-    organizations_users }o--|| roles : "rol_id"
 
     workspaces ||--o{ workspaces_users : "wks_id"
     workspaces ||--o{ projects : "wks_id"
@@ -393,7 +354,6 @@ erDiagram
 
     workspaces_users }o--|| workspaces : "wks_id"
     workspaces_users }o--|| users : "usr_id"
-    workspaces_users }o--|| roles : "rol_id"
 
     projects ||--o{ projects_users : "prj_id"
     projects ||--o{ sprints : "prj_id"
@@ -402,20 +362,16 @@ erDiagram
 
     projects_users }o--|| projects : "prj_id"
     projects_users }o--|| users : "usr_id"
-    projects_users }o--|| roles : "rol_id"
-
-    task_status ||--o{ tasks : "tst_id"
 
     sprints ||--o{ tasks : "spr_id"
 
     tasks ||--o{ tasks_users : "tsk_id"
     tasks ||--o{ tasks_task_categories : "tsk_id"
-    tasks ||--o{ tasks_comments : "tsk_id"
+    tasks ||--o{ comments : "tsk_id"
     tasks ||--o{ attachments : "tsk_id"
     tasks ||--o{ work_times : "tsk_id"
     tasks }o--|| workspaces : "wks_id"
     tasks }o--|| sprints : "spr_id"
-    tasks }o--|| task_status : "tst_id"
 
     tasks_users }o--|| tasks : "tsk_id"
     tasks_users }o--|| users : "usr_id"
@@ -426,20 +382,14 @@ erDiagram
     tasks_task_categories }o--|| tasks : "tsk_id"
     tasks_task_categories }o--|| task_categories : "tsc_id"
 
-    comments ||--o{ tasks_comments : "cmt_id"
-    comments ||--o{ attachments : "cmt_id_attached"
+    comments ||--o{ attachments : "cmt_id"
     comments }o--|| users : "usr_id"
-
-    tasks_comments }o--|| tasks : "tsk_id"
-    tasks_comments }o--|| comments : "cmt_id"
+    comments }o--|| tasks : "tsk_id"
 
     attachments }o--|| users : "usr_id"
     attachments }o--|| tasks : "tsk_id"
-    attachments }o--|| comments : "cmt_id_attached"
+    attachments }o--|| comments : "cmt_id"
 
-    notification_levels ||--o{ notifications : "ntl_id"
-
-    notifications }o--|| notification_levels : "ntl_id"
     notifications }o--|| users : "usr_id"
 
     activity_logs }o--|| users : "usr_id"

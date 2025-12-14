@@ -1,5 +1,11 @@
 # DB DESIGN
 
+## ENUM TYPES
+
+- task_status ('todo', 'in_progress', 'in_review', 'pending', 'done')
+- notification_level ('appinfo', 'mention', 'assign', 'remind', 'alert')
+- subscription_status ('active', 'canceled', 'expired', 'trial', 'unpaid')
+
 ## USER AUTHENTICATION AND SESSIONS
 
 user account information and session store
@@ -35,7 +41,6 @@ the second level group
 ## TASK
 
 - tasks
-- task_status (static table)
 - sprints
 - task_categories
 - comments
