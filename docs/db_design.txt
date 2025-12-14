@@ -11,7 +11,7 @@
 user account information and session store
 
 - users
-- user_sessions(physical delete)
+- user_sessions (physical delete)
 
 ## SUBSCRIPTION
 
@@ -40,11 +40,13 @@ the second level group
 
 ## TASK
 
-- tasks
+- tasks (supports realtime editing with optimistic locking)
+- tasks_users (bridge table)
 - sprints
 - task_categories
-- comments
-- attachments
+- tasks_task_categories (bridge table)
+- comments (direct link to task)
+- attachments (includes file metadata)
 
 ## NOFITICATION
 
@@ -53,5 +55,5 @@ the second level group
 
 ## TIME TRACKING
 
-- time_entries
+- work_times
 
