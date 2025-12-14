@@ -1,0 +1,10 @@
+# backend
+
+This project has the "data-driven" naming rule.
+
+let's start from around users table implementation.
+*database first
+
+- create application.conf to connect to DB and Redis
+
+# Lib 

@@ -1,0 +1,2 @@
+# testing dependencies
+bazel build @maven_demo1//:all

@@ -19,11 +19,11 @@ maven.install(
         "org.apache.pekko:pekko-stream_2.13:1.0.3", ## pekko lib to handle stream (for much amount of data)
         "org.apache.pekko:pekko-http-core_2.13:1.0.1", ## pekko core (low layer)
         "org.apache.pekko:pekko-http_2.13:1.0.1", ## pekko core
-        "org.apache.pekko:pekko-http-spray-json_2.13:1.0.1", ## integration between pekko and spray JSON
-        "io.spray:spray-json_2.13:1.3.6", # Spray JSON lib (compiling JSON as Scala objects) marshalling/ unmarshalling
         "com.typesafe.slick:slick_2.13:3.5.0", # Slick lib, to write SQL in Scala
         "com.typesafe.slick:slick-hikaricp_2.13:3.5.0", # integration between Slick and HikariCP/ connection pool
         "org.postgresql:postgresql:42.7.1", # PostgreSQL
+        "io.lettuce:lettuce-core:6.3.1.RELEASE", # Redis Client
+        "com.typesafe.play:play-json_2.13:2.10.4", # Scala JSON lib
         "com.github.jwt-scala:jwt-core_2.13:9.4.5", # JWT lib
         "org.mindrot:jbcrypt:0.4", #bccrypt lib, for shadow passwords
         "ch.qos.logback:logback-classic:1.4.14", # logging lib for Java (Simple Logging Facade for Java)

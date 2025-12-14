@@ -15,7 +15,8 @@ project/project/
 *.log
 
 # Bazel
-bazel-*/
+/bazel-*/
+user.bazelrc
 
 # OS / Editor
 .DS_Store
