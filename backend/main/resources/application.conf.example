@@ -9,7 +9,7 @@ demo1-db {
         driver = "org.postgresql.Driver" #jdbc driver / java database connectivity
         url = "jdbc:postgresql://localhost:5432/demo1"
         user = "demo1_user"
-        password = "Vfr800f!"
+        password = "*******"
         numThreads = 10
         maxConnections = 10 # for dev env
     }
