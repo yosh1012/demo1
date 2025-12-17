@@ -7,7 +7,7 @@ cd ${WORKDIR}
 
 DB_NAME="demo1"
 DB_USER="demo1_user"
-DB_PASS="Vfr800f!"
+DB_PASS="*****"
 
 echo "reset DB dbname: ${DB_NAME} dbuser: ${DB_USER}..."
 

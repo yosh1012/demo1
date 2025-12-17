@@ -19,6 +19,11 @@ project/project/
 /bazel-*
 bazel-*
 user.bazelrc
+.bazelbsp/
+.bsp/
+.bazelproject
+.vscode/
+
 
 # OS / Editor
 .DS_Store
@@ -31,3 +36,6 @@ Thumbs.db
 
 # Docker
 *.env
+
+# Github
+.github/

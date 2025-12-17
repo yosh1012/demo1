@@ -28,10 +28,12 @@ maven.install(
         "org.mindrot:jbcrypt:0.4", #bccrypt lib, for shadow passwords
         "ch.qos.logback:logback-classic:1.4.14", # logging lib for Java (Simple Logging Facade for Java)
         "com.typesafe.scala-logging:scala-logging_2.13:3.9.5", # logger wrapper for Scala
-        "com.typesafe:config:1.4.3", # typesafe config
+        "com.typesafe:config:1.4.3", # typesafe config *HOCON(readable JSON) 
         "org.scalatest:scalatest_2.13:3.2.17", # scala test lib
         "org.apache.pekko:pekko-http-testkit_2.13:1.0.1", # pekko http test kit
         "org.apache.pekko:pekko-actor-testkit-typed_2.13:1.0.3", # pekko actor test kit
+        "com.fasterxml.jackson.core:jackson-databind:2.15.2", # JSON lib dependency with Play
+        "com.fasterxml.jackson.core:jackson-core:2.15.2", # JSON lib dependency with Play
     ],
     repositories = [
         "https://repo1.maven.org/maven2",
