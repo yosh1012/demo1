@@ -51,6 +51,13 @@ CREATE TABLE subscription_plans(
     spl_id INT PRIMARY KEY,
 
     spl_name VARCHAR(55) NOT NULL,
+    spl_can_add_users BOOLEAN NOT NULL DEFAULT false,
+    spl_included_users INT NOT NULL DEFAULT 1,
+    spl_max_projects INT NOT NULL DEFAULT 1,
+    spl_max_workspaces INT NOT NULL DEFAULT 1,
+    spl_has_ads BOOLEAN NOT NULL DEFAULT false,
+    spl_can_add_opend_workspace BOOLEAN NOT NULL DEFAULT false,
+
     spl_regular_price DECIMAL NOT NULL,
     spl_discount_3months DECIMAL DEFAULT 0.00,
     spl_discount_6months DECIMAL DEFAULT 0.00,
@@ -58,6 +65,7 @@ CREATE TABLE subscription_plans(
     spl_3months_monthly_price DECIMAL GENERATED ALWAYS AS (spl_regular_price * (1 - spl_discount_3months)) STORED,
     spl_6months_monthly_price DECIMAL GENERATED ALWAYS AS (spl_regular_price * (1 - spl_discount_6months)) STORED,
     spl_1year_monthly_price DECIMAL GENERATED ALWAYS AS (spl_regular_price * (1 - spl_discount_1year)) STORED,
+    spl_additional_user_price DECIMAL DEFAULT 0.00,
 
     spl_created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     spl_updated_at TIMESTAMP,
@@ -71,6 +79,7 @@ CREATE TABLE organizations(
     org_name VARCHAR(255) NOT NULL,
     org_description TEXT,
     org_is_active BOOLEAN NOT NULL,
+    org_current_user_count INT NOT NULL DEFAULT 1,
     org_subscription_started_date DATE,
     org_subscription_end_date DATE,
     org_subscription_status SUBSCRIPTION_STATUS NOT NULL,
