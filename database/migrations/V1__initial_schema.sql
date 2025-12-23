@@ -242,12 +242,12 @@ CREATE TABLE tasks(
     tsk_updated_at TIMESTAMP,
     tsk_deleted_at TIMESTAMP,
 
-    wks_id BIGINT NOT NULL REFERENCES workspaces(wks_id) ON DELETE CASCADE,
+    prj_id BIGINT NOT NULL REFERENCES projects(prj_id) ON DELETE CASCADE,
     spr_id BIGINT REFERENCES sprints(spr_id) ON DELETE CASCADE
 );
 
-CREATE INDEX idx_tasks_fk_wks_id
-ON tasks(wks_id);
+CREATE INDEX idx_tasks_fk_prj_id
+ON tasks(prj_id);
 
 CREATE INDEX idx_tasks_fk_spr_id
 ON tasks(spr_id);

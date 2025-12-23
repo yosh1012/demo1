@@ -2,11 +2,11 @@
 
 This project has the "data-driven" naming rule.
 
-let's start from around users table implementation.
-*database first
-
 - create application.conf to connect to DB and Redis
 - create Main.scala and main/BUILD.bazel
+
+Use MVC pattern, not DDD because this project doesn't have too many files.
+
 
 # Lib 
 
