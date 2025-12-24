@@ -25,6 +25,7 @@
 - tasks_task_categories (bridge)
 - comments
 - attachments
+
 - notifications
 
 - activity_logs
