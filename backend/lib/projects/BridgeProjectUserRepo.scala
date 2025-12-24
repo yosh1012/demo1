@@ -13,7 +13,7 @@ class BridgeProjectUserTable(tag: Tag) extends Table[BridgeProjectUser](tag, "pr
     def * = (
         column_name1, column_name2, column_name3, column_name4,
         column_name5, column_name6, column_name7
-    ).mapTo[BridgeProjectUserTable]
+    ).mapTo[BridgeProjectUser]
 }
 
 class BridgeProjectUserRepository(db: Database) {

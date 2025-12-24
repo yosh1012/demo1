@@ -13,7 +13,7 @@ class BridgeOrganizationUserTable(tag: Tag) extends Table[BridgeOrganizationUser
     def * = (
         column_name1, column_name2, column_name3, column_name4,
         column_name5, column_name6, column_name7
-    ).mapTo[BridgeOrganizationUserTable]
+    ).mapTo[BridgeOrganizationUser]
 }
 
 class BridgeOrganizationUserRepository(db: Database) {

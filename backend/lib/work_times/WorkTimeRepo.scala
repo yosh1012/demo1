@@ -22,7 +22,7 @@ class WorkTimeRepository(db: Database) {
     def findById(id: Long): Future[Option[WorkTime]] = 
         db.run(work_times.filter(_.wkt_id === id).result.headOption)
 
-    def findAll(): Future[Seq[Task]] = 
+    def findAll(): Future[Seq[WorkTime]] = 
         db.run(work_times.result)
     
 }
