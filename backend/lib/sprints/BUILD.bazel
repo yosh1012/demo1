@@ -1,10 +1,13 @@
 load("@rules_scala//scala:scala.bzl", "scala_library")
 
 scala_library(
-    name = "packagename",
+    name = "sprints",
     srcs = glob(["*.scala"]),
     visibility = ["//visibility:public"],
     deps = [
-        "@maven_demo1//:dependent.packages",
+        "@maven_demo1//:com_typesafe_play_play_json_2_13",
+        "@maven_demo1//:com_typesafe_play_play_functional_2_13",
+        "@maven_demo1//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven_demo1//:com_fasterxml_jackson_core_jackson_core",
     ],
 )
