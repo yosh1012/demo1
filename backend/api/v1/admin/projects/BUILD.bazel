@@ -1,0 +1,11 @@
+load("@rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "api_admin_projects",
+    srcs = glob(["*.scala"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//backend/lib/mypackage:mypackage"
+        "@maven_demo1//:name.package",
+    ],
+)
