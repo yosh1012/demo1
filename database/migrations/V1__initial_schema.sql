@@ -52,11 +52,11 @@ CREATE TABLE subscription_plans(
 
     spl_name VARCHAR(55) NOT NULL,
     spl_can_add_users BOOLEAN NOT NULL DEFAULT false,
-    spl_included_users INT NOT NULL DEFAULT 1,
-    spl_max_projects INT NOT NULL DEFAULT 1,
-    spl_max_workspaces INT NOT NULL DEFAULT 1,
+    spl_included_users_count INT NOT NULL DEFAULT 1,
+    spl_max_projects_count INT NOT NULL DEFAULT 1,
+    spl_max_workspaces_count INT NOT NULL DEFAULT 1,
     spl_has_ads BOOLEAN NOT NULL DEFAULT false,
-    spl_can_add_opend_workspace BOOLEAN NOT NULL DEFAULT false,
+    spl_can_add_opened_workspace BOOLEAN NOT NULL DEFAULT false,
 
     spl_regular_price DECIMAL NOT NULL,
     spl_discount_3months DECIMAL DEFAULT 0.00,

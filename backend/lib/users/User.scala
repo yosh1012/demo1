@@ -4,7 +4,7 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDateTime
 
 case class User(
-    usr_id: Long,
+    usr_id: Long, // PK
     usr_email: String,
     usr_first_name: Option[String],
     usr_last_name: Option[String],
