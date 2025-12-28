@@ -1,0 +1,41 @@
+# for Table class generation from a recode model
+^(\s*)(?!\s*class).*?(\w+): ([^,/]+),?.*
+$1def $2 = column[$3]("$2")
+
+# for extracting column names
+^\s+def (\w+) .*
+\t\t$1,
+
+# for Record class generation from SQL
+^\s+(\w+)\s(\w+(?:\([0-9]+\))?),?\s+(NOT NULL)?(.*)
+\t$1: $2, //$3 $4
+
+^(\t\w+:\s)(\w+(?:[\(\)0-9]*))(,\s+//)(?!\s*NOT NULL|\s*PRIMARY)
+$1Option[$2]$3$4
+
+BIGSERIAL
+Long
+
+BIGINT
+Long
+
+PRIMARY\sKEY,
+PK
+
+TEXT
+String
+
+TIMESTAMP
+LocalDateTime
+
+VARCHAR\([0-9]+\)
+String
+
+INT
+Int
+
+BOOLEAN
+Boolean
+
+DECIMAL
+BigDecimal

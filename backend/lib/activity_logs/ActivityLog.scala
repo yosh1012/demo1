@@ -1,10 +1,21 @@
 package com.taskmanagement.activity_logs.demo1
 
-import dependencies
+import play.api.libs.json.{Json, OFormat}
+import java.time.LocalDateTime
 
 case class ActivityLog(
-    column: type, // DEFALUT
-    tbl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
-    tbl_updated_at: Option[LocalDateTime],
-    tbl_deleted_at: Option[LocalDateTime]
+	act_id: Long, // PK
+
+	act_action: String,
+	act_details: String,
+
+	act_created_at: LocalDateTime, //DEFAULT CURRENT_TIMESTAMP
+	act_updated_at: Option[LocalDateTime],
+    act_deleted_at: Option[LocalDateTime],
+
+	usr_id: Long //REFERENCES users(usr_id) ON DELETE CASCADE
 )
+
+object ActivityLog {
+    implicit val format: OFormat[ActivityLog] = Json.format[ActivityLog]
+}
