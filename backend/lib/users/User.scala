@@ -1,7 +1,7 @@
 package com.taskmanagement.users.demo1
 
 import play.api.libs.json.{Json, OFormat}
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 
 case class User(
     usr_id: Long, // PK

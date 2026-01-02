@@ -15,7 +15,7 @@ class UserTable(tag: Tag) extends Table[User](tag, "users") {
     def usr_lang_preference = column[Option[String]]("usr_lang_preference")
     def usr_last_login_at = column[Option[LocalDateTime]]("usr_last_login_at")
     def usr_is_active = column[Boolean]("usr_is_active")
-    def usr_created_at = column[LocalDateTime]("usr_created_at") // DEFAULT CURRENT_TIMESTAMP
+    def usr_created_at = column[LocalDateTime]("usr_created_at")
     def usr_updated_at = column[Option[LocalDateTime]]("usr_updated_at")
     def usr_deleted_at = column[Option[LocalDateTime]]("usr_deleted_at")
 

@@ -1,6 +1,7 @@
 package com.taskmanagement.subscription_plans.demo1
 
-import dependencies
+import play.api.libs.json.{Json, OFormat}
+import java.time.LocalDateTime
 
 case class SubscriptionPlan(
     spl_id: Int, // PK

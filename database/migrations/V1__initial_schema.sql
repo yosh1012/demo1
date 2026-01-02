@@ -78,7 +78,7 @@ CREATE TABLE organizations(
 
     org_name VARCHAR(255) NOT NULL,
     org_description TEXT,
-    org_is_active BOOLEAN NOT NULL,
+    org_is_active BOOLEAN NOT NULL DEFAULT false,
     org_current_user_count INT NOT NULL DEFAULT 1,
     org_subscription_started_date DATE,
     org_subscription_end_date DATE,

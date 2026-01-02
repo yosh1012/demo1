@@ -1,7 +1,7 @@
 package com.taskmanagement.activity_logs.demo1
 
 import play.api.libs.json.{Json, OFormat}
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 
 case class ActivityLog(
 	act_id: Long, // PK
@@ -13,7 +13,7 @@ case class ActivityLog(
 	act_updated_at: Option[LocalDateTime],
     act_deleted_at: Option[LocalDateTime],
 
-	usr_id: Long //REFERENCES users(usr_id) ON DELETE CASCADE
+	usr_id: Long // REFERENCES users(usr_id) ON DELETE CASCADE
 )
 
 object ActivityLog {

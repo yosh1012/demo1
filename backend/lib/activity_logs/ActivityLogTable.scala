@@ -2,7 +2,7 @@ package com.taskmanagement.activity_logs.demo1
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 
 class ActivityLogTable(tag: Tag) extends Table[ActivityLog](tag, "activity_logs") {
 	def act_id = column[Long]("act_id", O.PrimaryKey, O.AutoInc)
@@ -10,11 +10,11 @@ class ActivityLogTable(tag: Tag) extends Table[ActivityLog](tag, "activity_logs"
 	def act_action = column[String]("act_action")
 	def act_details = column[String]("act_details")
 
-	def act_created_at = column[LocalDateTime]("act_created_at") //DEFAULT CURRENT_TIMESTAMP
+	def act_created_at = column[LocalDateTime]("act_created_at")
 	def act_updated_at = column[Option[LocalDateTime]]("act_updated_at")
     def act_deleted_at = column[Option[LocalDateTime]]("act_deleted_at")
 
-	def usr_id = column[Long]("usr_id") //REFERENCES users(usr_id) ON DELETE CASCADE
+	def usr_id = column[Long]("usr_id")
 
     def * = (
 		act_id,

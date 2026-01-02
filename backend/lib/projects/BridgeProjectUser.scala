@@ -1,6 +1,7 @@
 package com.taskmanagement.projects.demo1
 
-import dependencies
+import play.api.libs.json.{Json, OFormat}
+import java.time.{LocalDate, LocalDateTime}
 
 case class BridgeProjectUser(
     column: type, // DEFALUT
