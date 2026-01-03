@@ -5,7 +5,6 @@ import scala.concurrent.Future
 import java.time.{LocalDate, LocalDateTime}
 
 class OrganizationTable(tag: Tag) extends Table[Organization](tag, "organizations") {
-
         def org_id = column[Long]("org_id", O.PrimaryKey, O.AutoInc)
 
         def org_name = column[String]("org_name")

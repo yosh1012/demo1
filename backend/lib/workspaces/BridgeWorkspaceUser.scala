@@ -4,8 +4,18 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
 case class BridgeWorkspaceUser(
-    column: type, // DEFALUT
-    tbl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
-    tbl_updated_at: Option[LocalDateTime],
-    tbl_deleted_at: Option[LocalDateTime]
+        wks_usr_id: Long, // PK
+        
+        wks_usr_is_manager: Boolean, // DEFAULT false
+
+        wks_usr_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,
+        wks_usr_updated_at: Option[LocalDateTime],
+        wks_usr_deleted_at: Option[LocalDateTime],
+
+        wks_id: Long, //REFERENCES workspaces(wks_id) ON DELETE CASCADE,
+        usr_id: Long //REFERENCES users(usr_id) ON DELETE CASCADE
 )
+
+object BridgeWorkspaceUser {
+    implicit val format: OFormat[BridgeWorkspaceUser] = Json.format[BridgeWorkspaceUser]
+}

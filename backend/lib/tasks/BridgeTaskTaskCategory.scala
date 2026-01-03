@@ -4,8 +4,16 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
 case class BridgeTaskTaskCategory(
-    column: type, // DEFALUT
-    tbl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
-    tbl_updated_at: Option[LocalDateTime],
-    tbl_deleted_at: Option[LocalDateTime]
+        tsk_tsc_id: Long, // PK
+
+        tsk_tsc_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,
+        tsk_tsc_updated_at: Option[LocalDateTime],
+        tsk_tsc_deleted_at: Option[LocalDateTime],
+
+        tsk_id: Long, // REFERENCES tasks(tsk_id) ON DELETE CASCADE,
+        tsc_id: Long // REFERENCES task_categories(tsc_id) ON DELETE CASCADE
 )
+
+object BridgeTaskTaskCategory {
+    implicit val format: OFormat[BridgeTaskTaskCategory] = Json.format[BridgeTaskTaskCategory]
+}

@@ -4,8 +4,17 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
 case class TaskCategory(
-    column: type, // DEFALUT
-    tbl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
-    tbl_updated_at: Option[LocalDateTime],
-    tbl_deleted_at: Option[LocalDateTime]
+        tsc_id: Long, // PK
+
+        tsc_name: String,
+
+        tsc_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,
+        tsc_updated_at: Option[LocalDateTime],
+        tsc_deleted_at: Option[LocalDateTime],
+
+        prj_id: Long // REFERENCES projects(prj_id) ON DELETE CASCADE
 )
+
+object TaskCategory {
+    implicit val format: OFormat[TaskCategory] = Json.format[TaskCategory]
+}

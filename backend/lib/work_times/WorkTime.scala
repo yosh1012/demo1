@@ -4,8 +4,20 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
 case class WorkTime(
-    column: type, // DEFALUT
-    tbl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
-    tbl_updated_at: Option[LocalDateTime],
-    tbl_deleted_at: Option[LocalDateTime]
+        wkt_id: Long, // PK
+
+        wkt_hours: BigDecimal, // DEFAULT 0.00
+        wkt_date: LocalDate,
+        wkt_description: Option[String],
+
+        wkt_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,
+        wkt_updated_at: Option[LocalDateTime],
+        wkt_deleted_at: Option[LocalDateTime],
+
+        usr_id: Long, // REFERENCES users(usr_id) ON DELETE CASCADE,
+        tsk_id: Long // REFERENCES tasks(tsk_id) ON DELETE CASCADE
 )
+
+object WorkTime {
+    implicit val format: OFormat[WorkTime] = Json.format[WorkTime]
+}

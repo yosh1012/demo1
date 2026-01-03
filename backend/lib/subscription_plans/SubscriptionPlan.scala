@@ -19,7 +19,7 @@ case class SubscriptionPlan(
     spl_3months_monthly_price: Option[Decimal],
     spl_6months_monthly_price: Option[Decimal],
     spl_1year_monthly_price: Option[Decimal],
-    spl_additional_user_price: Option[Decimal] // DEFAULT 0.00
+    spl_additional_user_price: Option[Decimal], // DEFAULT 0.00
 
     spl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
     spl_updated_at: Option[LocalDateTime],
