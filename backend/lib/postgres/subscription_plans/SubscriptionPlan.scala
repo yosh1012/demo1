@@ -12,14 +12,14 @@ case class SubscriptionPlan(
     spl_has_ads: Boolean, // DEFAULT false
     spl_can_add_opened_workspace: Boolean, // DEFAULT false
     
-    spl_regular_price: Decimal,
-    spl_discount_3months: Option[Decimal], // DEFAULT 0.00
-    spl_discount_6months: Option[Decimal], // DEFAULT 0.00
-    spl_discount_1year: Option[Decimal], // DEFAULT 0.00
-    spl_3months_monthly_price: Option[Decimal],
-    spl_6months_monthly_price: Option[Decimal],
-    spl_1year_monthly_price: Option[Decimal],
-    spl_additional_user_price: Option[Decimal], // DEFAULT 0.00
+    spl_regular_price: BigDecimal,
+    spl_discount_3months: Option[BigDecimal], // DEFAULT 0.00
+    spl_discount_6months: Option[BigDecimal], // DEFAULT 0.00
+    spl_discount_1year: Option[BigDecimal], // DEFAULT 0.00
+    spl_3months_monthly_price: Option[BigDecimal],
+    spl_6months_monthly_price: Option[BigDecimal],
+    spl_1year_monthly_price: Option[BigDecimal],
+    spl_additional_user_price: Option[BigDecimal], // DEFAULT 0.00
 
     spl_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
     spl_updated_at: Option[LocalDateTime],
