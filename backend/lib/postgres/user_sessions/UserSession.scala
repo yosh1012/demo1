@@ -14,7 +14,7 @@ case class UserSession(
         ssn_will_expire_at: LocalDateTime,
         ssn_last_accessed_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
         
-        ssn_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,
+        ssn_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP
         ssn_updated_at: Option[LocalDateTime],
         // Physical Delete
 
