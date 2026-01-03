@@ -7,7 +7,7 @@ import java.util.UUID
 class UserSessionRepository(db: Database) {
     private val user_sessions = TableQuery[UserSessionTable]
 
-    def findById(ssn_id: UUID): Future[Option[UserSession]] = 
+    def findById(id: UUID): Future[Option[UserSession]] = 
         db.run(user_sessions.filter(_.ssn_id === id).result.headOption)
 
     def findAll(): Future[Seq[UserSession]] = 
