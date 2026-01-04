@@ -6,15 +6,24 @@ import org.apache.pekko.http.scaladsl.server.Route
 class ProfileRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("me" / "profile") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get user profile")
+                }
+                put {
+                    complete("update user profile")
+                }
+            },
+            
+            path("email") {
+                put {
+                    complete("update user email")
                 }
             },
 
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("password") {
+                post {
+                    complete("reset user password")
                 }
             }
         )

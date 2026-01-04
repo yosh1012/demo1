@@ -6,15 +6,21 @@ import org.apache.pekko.http.scaladsl.server.Route
 class RelatedTasksRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("me" / "related_tasks") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get my projects")
                 }
             },
 
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("kanban") {
+                get {
+                    complete("get my project's kanbans")
+                }
+            },
+
+            path(Segment) { hashed_prj_id =>
+                get {
+                    complete(s"get project detail: $hashed_prj_id")
                 }
             }
         )
