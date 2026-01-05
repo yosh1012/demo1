@@ -4,19 +4,28 @@ import org.apache.pekko.http.scaladsl.server.Directives._
 import org.apache.pekko.http.scaladsl.server.Route
 
 class TasksRoutes(authService: AuthService) {
-    val routes: Route = pathPrefix("me" / "tasks") {
+    val routes: Route = pathPrefix("me" / "projects" / Segment / "tasks") { hashed_prj_id =>
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get my project's tasks")
+                } ~
+                post {
+                    complete("created a project task")
                 }
             },
 
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path(Segment) { hashed_tsk_id =>
+                get {
+                    complete(s"get task detail: $hashed_tsk_id")
+                } ~
+                put {
+                    complete(s"edited task settings: $hashed_tsk_id")
+                } ~
+                delete {
+                    complete(s"deleted task: $hashed_tsk_id")
                 }
-            }
+            }        
         )
     }
 }

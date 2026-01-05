@@ -6,15 +6,33 @@ import org.apache.pekko.http.scaladsl.server.Route
 class AdminProjectsRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("admin" / "projects") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get project information")
+                } ~
+                post {
+                    complete("create a new project")
                 }
             },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path(Segment / "work_times") { hashed_prj_id =>
+                get {
+                    complete("get project's total worktimes")
+                }
+            },
+            path(Segment / "users" / Segment) { (hashed_prj_id, hashed_usr_id) =>
+                put {
+                    complete("set project role to user")
+                } ~
+                delete {
+                    complete("delete user from project")
+                }
+            },
+            path(Segment) { hashed_prj_id =>
+                put {
+                    complete("edited project settings")
+                } ~
+                delete {
+                    complete("deleted project")
                 }
             }
         )

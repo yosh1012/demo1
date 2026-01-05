@@ -6,15 +6,33 @@ import org.apache.pekko.http.scaladsl.server.Route
 class OrganizationRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("admin" / "organization") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get organization information")
+                } ~
+                put {
+                    complete("updated organization name")
                 }
             },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("users") {
+                get {
+                    complete("get organization users")
+                } ~
+                post {
+                    complete("created a new organization user")
+                }
+            },
+            path("users" / Segment) { hashed_usr_id =>
+                put {
+                    complete("set organization admin role to user")
+                } ~
+                delete {
+                    complete("deleted organization user")
+                }
+            },
+            path("work_times") {
+                get {
+                    complete("get organization total worktimes")
                 }
             }
         )

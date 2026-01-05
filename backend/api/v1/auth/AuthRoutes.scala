@@ -6,15 +6,34 @@ import org.apache.pekko.http.scaladsl.server.Route
 class AuthRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("auth") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            path("signup") {
+                post {
+                    complete("sign up a new user")
                 }
             },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("password") {
+                post {
+                    complete("reset user's password")
+                }
+            },
+            path("login") {
+                post {
+                    complete("login user")
+                }
+            },
+            path("verify") {
+                get {
+                    complete("verify user's access token")
+                }
+            },
+            path("refresh") {
+                post {
+                    complete("refresh user's access token")
+                }
+            },
+            path("logout") {
+                post {
+                    complete("logout user")
                 }
             }
         )

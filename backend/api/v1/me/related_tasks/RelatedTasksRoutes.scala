@@ -8,21 +8,9 @@ class RelatedTasksRoutes(authService: AuthService) {
         concat(
             pathEnd{
                 get {
-                    complete("get my projects")
+                    complete("get my related tasks")
                 }
-            },
-
-            path("kanban") {
-                get {
-                    complete("get my project's kanbans")
-                }
-            },
-
-            path(Segment) { hashed_prj_id =>
-                get {
-                    complete(s"get project detail: $hashed_prj_id")
-                }
-            }
+            }     
         )
     }
 }

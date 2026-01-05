@@ -6,17 +6,17 @@ import org.apache.pekko.http.scaladsl.server.Route
 class WorkTimesRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("me" / "work_times") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get my worktimes")
+                } ~
+                post {
+                    complete("created my worktime record")
+                } ~
+                delete {
+                    complete("deleted my worktime record")
                 }
-            },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
-                }
-            }
+            }   
         )
     }
 }

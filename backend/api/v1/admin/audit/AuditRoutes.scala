@@ -6,15 +6,14 @@ import org.apache.pekko.http.scaladsl.server.Route
 class AuditRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("admin" / "audit") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
+            pathEnd{
+                get {
+                    complete("get audit information")
                 }
             },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("logs") {
+                get {
+                    complete("get audit logs")
                 }
             }
         )

@@ -6,15 +6,9 @@ import org.apache.pekko.http.scaladsl.server.Route
 class NotificationsRoutes(authService: AuthService) {
     val routes: Route = pathPrefix("me" / "notifications") {
         concat(
-            path("endpoint1") {
-                get/post {
-                    complete("endpoint1")
-                }
-            },
-
-            path("endpoint2") {
-                get/post {
-                    complete("endpoint2")
+            path("notifications") {
+                get {
+                    complete("show my notifications")
                 }
             }
         )
