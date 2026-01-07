@@ -49,15 +49,9 @@ scala_deps.scala() # allows scala compiling in this project with Bazel tool chai
 
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True) # npm settings
 npm.npm_translate_lock(
-    name = "npm_web",
-    npm_package_lock = "//web:package-lock.json",
-    pnpm_lock = "//web:pnpm-lock.yaml",
+    name = "npm_frontend",
+    pnpm_lock = "//frontend:pnpm-lock.yaml",
 )
 
-npm.npm_translate_lock(
-    name = "npm_mobile",
-    npm_package_lock = "//mobile:package-lock.json",
-    pnpm_lock = "//mobile:pnpm-lock.yaml",
-)
-use_repo(npm, "npm_web", "npm_mobile")
+use_repo(npm, "npm_frontend")
 
