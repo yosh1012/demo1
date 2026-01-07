@@ -3,6 +3,13 @@ http {
     port = 8080
 }
 
+cors {
+    allowed-origins = [
+        "http://example.com:3000",
+        "http://example.com:5173"
+    ]
+}
+
 demo1-db {
     profile = "slick.jdbc.PostgresProfile$" # references singleton$
     db { # for Hicari Connection Pool
