@@ -1,4 +1,4 @@
-package com.taskmanagement.subscription_plans.demo1
+package com.taskmanagement.lib.postgres.subscription_plans.demo1
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future

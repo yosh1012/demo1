@@ -1,4 +1,4 @@
-package com.taskmanagement.notifications.demo1
+package com.taskmanagement.lib.postgres.notifications.demo1
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future

@@ -1,4 +1,4 @@
-package com.taskmanagement.user_sessions.demo1
+package com.taskmanagement.lib.postgres.user_sessions.demo1
 
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}

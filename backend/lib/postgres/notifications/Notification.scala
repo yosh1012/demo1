@@ -1,4 +1,4 @@
-package com.taskmanagement.notifications.demo1
+package com.taskmanagement.lib.postgres.notifications.demo1
 
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDateTime, LocalDate}

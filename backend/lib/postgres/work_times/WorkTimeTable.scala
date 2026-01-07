@@ -1,4 +1,4 @@
-package com.taskmanagement.work_times.demo1
+package com.taskmanagement.lib.postgres.work_times.demo1
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future
