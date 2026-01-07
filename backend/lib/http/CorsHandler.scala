@@ -29,16 +29,26 @@ object CorsHandler{
     }
 
     def withCors(apiRoute: Route): Route = {
+        // pekko.http.scaladsl.model.headers.Origin
         D.optionalHeaderValueByType[Origin](()) {
-            // pekko.http.scaladsl.model.headers.Origin
             case Some(originHeader: Origin) =>
                 val originUrl: String = originHeader.value
 
                 if(allowedOrigins.contains(originUrl)) {
                     D.options {
-
+                        corsResponseHeaders(originUrl) {
+                            D.complete(HttpResponse(StatusCodes.OK))
+                        }
+                    } ~
+                    corsResponseHeaders(originUrl) {
+                        apiRoute
                     }
+                } else {
+                    D.complete(HttpResponse(StatusCodes.Forbidden))
                 }
+                
+            case None =>
+                apiRoute
         }
     }
 }
