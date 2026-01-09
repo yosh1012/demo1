@@ -5,11 +5,13 @@ module(
 
 bazel_dep(name = "aspect_bazel_lib", version = "1.42.2") # for extent bazel build rules
 bazel_dep(name = "aspect_rules_js", version = "1.40.0") # to build JS and TypeScript
-bazel_dep(name = "rules_nodejs", version = "6.0.0") # to build nodeJS
+bazel_dep(name = "aspect_rules_ts", version = "2.4.2") # to build TypeScript
+bazel_dep(name = "rules_nodejs", version = "6.4.0") # to build nodeJS
 
 bazel_dep(name = "rules_scala", version = "7.0.0") # build rules for scala (need for scala build)
 bazel_dep(name = "rules_jvm_external", version = "6.3") # using maven repo for extensions
 
+# Bazel tool chain
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven") ## using rules_jvm_external
 maven.install(
     name = "maven_demo1",
@@ -47,6 +49,17 @@ scala_config.settings(scala_version = "2.13.16")
 scala_deps = use_extension("@rules_scala//scala/extensions:deps.bzl", "scala_deps") # extend scala dependencies
 scala_deps.scala() # allows scala compiling in this project with Bazel tool chain
 
+# Node.js toolchain
+node = use_extension("@rules_nodejs//nodejs:extensions.bzl", "node")
+node.toolchain(
+    name = "nodejs",
+    node_version = "20.18.2",  # CVE-2025-23083 fixed
+)
+use_repo(node, "nodejs_toolchains")
+
+register_toolchains("@nodejs_toolchains//:all")
+
+# JS toolchain
 npm = use_extension("@aspect_rules_js//npm:extensions.bzl", "npm", dev_dependency = True) # npm settings
 npm.npm_translate_lock(
     name = "npm_frontend",
@@ -55,3 +68,7 @@ npm.npm_translate_lock(
 
 use_repo(npm, "npm_frontend")
 
+# TypeScript toolchain
+rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
+rules_ts_ext.deps()
+use_repo(rules_ts_ext, "npm_typescript")

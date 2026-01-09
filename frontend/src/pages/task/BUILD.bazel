@@ -1,0 +1,15 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    declaration = True,
+    source_map = True,
+    name = "task",
+    srcs = glob(["*.tsx"]),
+    tsconfig = "//frontend:tsconfig_bazel",
+    visibility = ["//frontend:__subpackages__"],
+    deps = [
+        "//frontend/src/components",
+        "//frontend/src/apiClient/v1/me/tasks",
+        "//frontend/src/apiClient/v1/me/work_times",
+    ],
+)

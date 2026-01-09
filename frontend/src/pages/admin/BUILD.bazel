@@ -1,0 +1,17 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    declaration = True,
+    source_map = True,
+    name = "admin",
+    srcs = glob(["*.tsx"]),
+    tsconfig = "//frontend:tsconfig_bazel",
+    visibility = ["//frontend:__subpackages__"],
+    deps = [
+        "//frontend/src/components",
+        "//frontend/src/apiClient/v1/admin/organization",
+        "//frontend/src/apiClient/v1/admin/workspaces",
+        "//frontend/src/apiClient/v1/admin/projects",
+        "//frontend/src/apiClient/v1/admin/audit",
+    ],
+)

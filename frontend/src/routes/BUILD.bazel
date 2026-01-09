@@ -1,0 +1,20 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    declaration = True,
+    source_map = True,
+    name = "routes",
+    srcs = glob(["*.tsx"]),
+    tsconfig = "//frontend:tsconfig_bazel",
+    visibility = ["//frontend:__subpackages__"],
+    deps = [
+        "//frontend/src/pages/auth",
+        "//frontend/src/pages/dashboard",
+        "//frontend/src/pages/admin",
+        "//frontend/src/pages/workspace",
+        "//frontend/src/pages/project",
+        "//frontend/src/pages/task",
+        "//frontend/src/pages/settings",
+        "//frontend/src/pages/error",
+    ],
+)

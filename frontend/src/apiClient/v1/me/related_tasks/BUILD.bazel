@@ -1,0 +1,11 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    declaration = True,
+    source_map = True,
+    name = "related_tasks",
+    srcs = glob(["*.ts"]),
+    tsconfig = "//frontend:tsconfig_bazel",
+    visibility = ["//frontend:__subpackages__"],
+    deps = ["//frontend/src/lib/http"],
+)
