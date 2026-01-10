@@ -1,0 +1,10 @@
+load("@aspect_rules_ts//ts:defs.bzl", "ts_project")
+
+ts_project(
+    declaration = True,
+    source_map = True,
+    name = "ui",
+    srcs = glob(["*.tsx"]),
+    tsconfig = "//frontend:tsconfig_bazel",
+    visibility = ["//frontend:__subpackages__"],
+)
