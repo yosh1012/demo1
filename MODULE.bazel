@@ -36,6 +36,7 @@ maven.install(
         "org.apache.pekko:pekko-actor-testkit-typed_2.13:1.0.3", # pekko actor test kit
         "com.fasterxml.jackson.core:jackson-databind:2.15.2", # JSON lib dependency with Play
         "com.fasterxml.jackson.core:jackson-core:2.15.2", # JSON lib dependency with Play
+        "org.hashids:hashids:1.0.3", #Hashids for hiding primary keys in URLs *technically it's not hash, but just encoding with salt
     ],
     repositories = [
         "https://repo1.maven.org/maven2",

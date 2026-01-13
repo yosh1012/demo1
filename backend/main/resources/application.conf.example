@@ -10,6 +10,17 @@ cors {
     ]
 }
 
+hashids {
+    salt = "secret-salt"
+    min-hash-length = 12
+}
+
+jwt {
+    secret-key = "secret-key"
+    access-token-expiration-seconds = 3600
+    refresh-token-expiration-seconds = 2592000
+}
+
 demo1-db {
     profile = "slick.jdbc.PostgresProfile$" # references singleton$
     db { # for Hicari Connection Pool
