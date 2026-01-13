@@ -1,22 +1,18 @@
 package com.taskmanagement.lib.http.demo1
 
 import com.typesafe.config.ConfigFactory
-import org.apache.pekko.http.scaladsl.model.HttpMethods._
 import org.apache.pekko.http.scaladsl.model.headers._
-import org.apache.pekko.http.scaladsl.model.{HttpResponse, StatusCodes}
-import org.apache.pekko.http.scaladsl.server.Directives._
-import org.apache.pekko.http.scaladsl.server.{Directive0, Route}
+import org.apache.pekko.http.scaladsl.model.HttpMethods._ // GET POST PUT DELETE etc
+import org.apache.pekko.http.scaladsl.model.{HttpMethod, HttpResponse, StatusCodes}
+import org.apache.pekko.http.scaladsl.server.{Directives, Directive0, Route}
 import scala.jdk.CollectionConverters._
 
 object CorsHandler{
 
     private val config = ConfigFactory.load()
-
     private val allowedOrigins: Set[String] = 
         config.getStringList("cors.allowed-origins").asScala.toSet
-
-    private val allowedMethods: Seq[HM.HttpMethod] = Seq(GET, POST, PUT, DELETE, OPTIONS)
-
+    private val allowedMethods: Seq[HttpMethod] = Seq(GET, POST, PUT, DELETE, OPTIONS)
     private val allowedHeaders: Seq[String] = Seq("Authorization", "Content-Type")
 
     /**
@@ -25,7 +21,7 @@ object CorsHandler{
      * @return 
      */
     private def addCorsResponseHeaders(originUrl: String): Directive0 = {
-        D.respondWithHeaders(
+        Directives.respondWithHeaders(
             `Access-Control-Allow-Origin`(HttpOrigin(originUrl)),
             `Access-Control-Allow-Methods`(allowedMethods),
             `Access-Control-Allow-Headers`(allowedHeaders),
@@ -50,7 +46,7 @@ object CorsHandler{
                         addCorsResponseHeaders(originUrl) {
                             Directives.complete(HttpResponse(StatusCodes.OK))
                         }
-                    } ~
+                    }
                     addCorsResponseHeaders(originUrl) {
                         apiRoute
                     }

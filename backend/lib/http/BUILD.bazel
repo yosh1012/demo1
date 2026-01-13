@@ -5,6 +5,10 @@ scala_library(
     srcs = glob(["*.scala"]),
     visibility = ["//visibility:public"],
     deps = [
+        "@maven_demo1//:com_typesafe_config",
+        "@maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13",
+        "@maven_demo1//:org_slf4j_slf4j_api",
+
         "@maven_demo1//:org_apache_pekko_pekko_actor_2_13",
         "@maven_demo1//:org_apache_pekko_pekko_stream_2_13",
         "@maven_demo1//:org_apache_pekko_pekko_http_2_13",
