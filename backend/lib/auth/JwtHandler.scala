@@ -48,7 +48,7 @@ object JwtHandler extends LazyLogging {
 
         if (verificationResult.isEmpty) {
             logger.warn(s"Token verification failed. token: $token")
-            return None
+            None
         }
 
         val usr_idOpt: Option[Long] = for {
@@ -59,10 +59,10 @@ object JwtHandler extends LazyLogging {
 
         if (usr_idOpt.isEmpty) {
             logger.warn(s"Invaild token subject format. token: $token")
-            return None
+            None
         }
 
-        return usr_idOpt
+        usr_idOpt
 
     }
 }

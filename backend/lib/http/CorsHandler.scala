@@ -1,11 +1,11 @@
 package com.taskmanagement.lib.http.demo1
 
 import com.typesafe.config.ConfigFactory
-import org.apache.pekko.http.scaladsl.model.{HttpMethods => HM}._
+import org.apache.pekko.http.scaladsl.model.HttpMethods._
 import org.apache.pekko.http.scaladsl.model.headers._
-import org.apache.pekko.http.scaladsl.model.{HttpResponse => HR, StatusCodes => SC}
-import org.apache.pekko.http.scaladsl.server.{Directives => D}._
-import org.apache.pekko.http.scaladsl.server.{Directive0 => D0, Route => R}
+import org.apache.pekko.http.scaladsl.model.{HttpResponse, StatusCodes}
+import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.{Directive0, Route}
 import scala.jdk.CollectionConverters._
 
 object CorsHandler{
@@ -19,7 +19,12 @@ object CorsHandler{
 
     private val allowedHeaders: Seq[String] = Seq("Authorization", "Content-Type")
 
-    private def corsResponseHeaders(originUrl: String): Directive0 = {
+    /**
+     * add CORS header
+     * @param originUrl
+     * @return 
+     */
+    private def addCorsResponseHeaders(originUrl: String): Directive0 = {
         D.respondWithHeaders(
             `Access-Control-Allow-Origin`(HttpOrigin(originUrl)),
             `Access-Control-Allow-Methods`(allowedMethods),
@@ -28,23 +33,29 @@ object CorsHandler{
         )
     }
 
-    def withCors(apiRoute: Route): Route = {
+
+    /**
+     * wrap a current Route with CORS header
+     * @param apiRoute
+     * @return a new Route with CORS header
+     */
+    def wrapWithCors(apiRoute: Route): Route = {
         // pekko.http.scaladsl.model.headers.Origin
-        D.optionalHeaderValueByType[Origin](()) {
+        Directives.optionalHeaderValueByType[Origin](()) {
             case Some(originHeader: Origin) =>
                 val originUrl: String = originHeader.value
 
                 if(allowedOrigins.contains(originUrl)) {
-                    D.options {
-                        corsResponseHeaders(originUrl) {
-                            D.complete(HttpResponse(StatusCodes.OK))
+                    Directives.options {
+                        addCorsResponseHeaders(originUrl) {
+                            Directives.complete(HttpResponse(StatusCodes.OK))
                         }
                     } ~
-                    corsResponseHeaders(originUrl) {
+                    addCorsResponseHeaders(originUrl) {
                         apiRoute
                     }
                 } else {
-                    D.complete(HttpResponse(StatusCodes.Forbidden))
+                    Directives.complete(HttpResponse(StatusCodes.Forbidden))
                 }
                 
             case None =>

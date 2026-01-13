@@ -33,7 +33,7 @@ object HashidsHandler extends LazyLogging {
 
         if (decodedArray.length > 0) {
             // return the first element of decodedArray
-            return Some(decodedArray(0))
+            Some(decodedArray(0))
         } else {
             logger.warn(s"Failed to decode Hashids, invalid format. encodedString: $encodedString")
             None
