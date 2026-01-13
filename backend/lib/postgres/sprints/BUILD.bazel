@@ -5,6 +5,10 @@ scala_library(
     srcs = glob(["*.scala"]),
     visibility = ["//visibility:public"],
     deps = [
+        "@maven_demo1//:com_typesafe_config",
+        "@maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13",
+        "@maven_demo1//:org_slf4j_slf4j_api",
+        
         "@maven_demo1//:com_typesafe_slick_slick_2_13",
         "@maven_demo1//:com_typesafe_play_play_json_2_13",
         "@maven_demo1//:com_typesafe_play_play_functional_2_13",
