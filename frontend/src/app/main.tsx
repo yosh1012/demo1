@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './tailwind.css'
-import { errorMessage } from '../lib/errorMessage';
+import { errorMessage } from '../lib/utils/errorMessage';
 
 const rootElement = document.getElementById('root');
 
