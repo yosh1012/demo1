@@ -3,7 +3,7 @@ package com.taskmanagement.lib.redis.task_draft.demo1
 // dependencies
 import play.api.libs.json._
 
-case class TaskDraftResponse(
+final case class TaskDraftResponse(
     tsk_id: Long,
     content_update: Seq[String]
 )

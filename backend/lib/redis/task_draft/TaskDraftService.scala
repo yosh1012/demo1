@@ -31,7 +31,7 @@ class TaskDraftService(repo: TaskDraftRedisRepo)
     /**
      * fetch current task explanation draft
      * @param tsk_id
-     * @return case class TaskDraftResponse
+     * @return async obeject for TaskDraftResponse
      */
     def fetchDraft(tsk_id: Long): Future[TaskDraftResponse] = {
         // logger.debug(s"fetching draft history for task ${tsk_id}") 
