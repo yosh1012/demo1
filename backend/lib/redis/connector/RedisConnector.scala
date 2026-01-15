@@ -1,8 +1,8 @@
-package com.taskmanagement.lib.redis.demo1
+package com.taskmanagement.lib.redis.connector.demo1
 
 // dependencies
-import com.typesafe.ConfigFactory
-import io.lettuce.core.{RedisClient, RedisURI}
+import com.typesafe.config.ConfigFactory
+import io.lettuce.core.{RedisClient, RedisURI, RedisConnectionException}
 import io.lettuce.core.api.StatefulRedisConnection
 import com.typesafe.scalalogging.LazyLogging
 
@@ -19,6 +19,7 @@ object RedisConnector extends LazyLogging {
     private val redisClient: RedisClient = RedisClient.create(redisUri)
 
     private lazy val redisConnection: StatefulRedisConnection[String, String] = {
+        // Lettuce RedisClient connect() returns java exception so use try-catch
         try {
             // logger.debug(s"Getting Redis connection to $redisHost: $redisPort")
             redisClient.connect()

@@ -1,7 +1,7 @@
 load("@rules_scala//scala:scala.bzl", "scala_library")
 
 scala_library(
-    name = "redis",
+    name = "redis_connector",
     srcs = glob(["*.scala"]),
     visibility = ["//visibility:public"],
     deps = [
