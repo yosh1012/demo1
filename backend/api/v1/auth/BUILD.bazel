@@ -5,7 +5,18 @@ scala_library(
     srcs = glob(["*.scala"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//backend/lib/mypackage:mypackage"
-        "@maven_demo1//:name.package",
+        "@maven_demo1//:com_typesafe_config",
+        "@maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13",
+        "@maven_demo1//:org_slf4j_slf4j_api",
+
+        "@maven_demo1//:com_typesafe_play_play_json_2_13",
+        "@maven_demo1//:com_github_pjfanning_pekko_http_play_json_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_http_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_http_core_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_actor_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_stream_2_13",
+
+        "//backend/lib/postgres/users:users",
+        "//backend/lib/auth:auth",
     ],
 )

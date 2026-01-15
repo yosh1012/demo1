@@ -26,6 +26,8 @@ maven.install(
         "org.postgresql:postgresql:42.7.1", # PostgreSQL
         "io.lettuce:lettuce-core:6.3.1.RELEASE", # Redis Client
         "com.typesafe.play:play-json_2.13:2.10.4", # Scala JSON lib
+        "com.github.pjfanning:pekko-http-play-json_2.13:2.1.0",
+        "com.typesafe.play:play-functional_2.13:2.10.4",
         "com.github.jwt-scala:jwt-core_2.13:9.4.5", # JWT lib
         "org.mindrot:jbcrypt:0.4", #bccrypt lib, for shadow passwords
         "ch.qos.logback:logback-classic:1.4.14", # logging lib for Java (Simple Logging Facade for Java)

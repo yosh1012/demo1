@@ -1,11 +1,10 @@
 package com.taskmanagement.api.v1.auth.demo1
 
 // dependencies
-import com.typsafe.config.{ConfigFactory, Config}
+import com.typesafe.config.{ConfigFactory, Config}
 import scala.concurrent.{Future, ExecutionContext}
 import com.taskmanagement.lib.postgres.users.demo1.{UserRepository, UserDTO, User}
-import com.taskmanagement.lib.auth.{PasswordHasher, JwtHandler}
-import com.taskmanagement.api.v1.auth.demo1.TokenResponse
+import com.taskmanagement.lib.auth.demo1.{PasswordHasher, JwtHandler, TokenResponse}
 
 class AuthService(userRepo: UserRepository)(implicit ec: ExecutionContext) {
     private val config: Config = ConfigFactory.load()
