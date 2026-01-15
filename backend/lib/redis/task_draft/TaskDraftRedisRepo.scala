@@ -1,11 +1,12 @@
 package com.taskmanagement.lib.redis.task_draft.demo1
 
 // dependencies
-import com.typesafe.ConfigFactory
-import io.lettuce.core.api.async.{RedisAsyncCommands, RedisStringAsyncCommands}
-import io.lettuce.core.{RedisFuture}
+import com.typesafe.config.ConfigFactory
+import io.lettuce.core.RedisFuture
 import io.lettuce.core.api.StatefulRedisConnection
+import io.lettuce.core.api.async.{RedisAsyncCommands, RedisStringAsyncCommands}
 import scala.concurrent.{Future, ExecutionContext, Promise}
+import scala.jdk.CollectionConverters
 import scala.util.{Success, Failure}
 import com.typesafe.scalalogging.LazyLogging
 
@@ -13,18 +14,16 @@ class TaskDraftRedisRepo(redisConnection: StatefulRedisConnection[String, String
     (implicit executionContext: ExecutionContext) extends LazyLogging {
 
     private val config = ConfigFactory.load()
-    private val prefix = config.getString("redis.task_draft_prefix")
-    private val ttl = config.getInt("redis.task_draft_ttl")
+    private val draftRedisKeyPrefix = config.getString("redis.task_draft_prefix")
+    private val draftTtlSeconds = config.getLong("redis.task_draft_ttl")
     
-    private val asyncStringCommands: RedisStringAsyncCommands[String, String] = redisConnection.async()
     private val asyncCommands: RedisAsyncCommands[String,String] = redisConnection.async()
     
     /**
      * convert RedisFuture into Scala's Future
      * @param redisFuture
-     * @return 
+     * @return scala's Future[Long or String] *lettuce returns String or Long
      */
-     // lettuce returns String(by setex/get) or Long(by del)
     private def convertToScalaFuture[T](redisFuture: RedisFuture[T]): Future[T] = {
         val promise = Promise[T]()
         redisFuture.whenComplete { (result, exception) =>
@@ -42,30 +41,62 @@ class TaskDraftRedisRepo(redisConnection: StatefulRedisConnection[String, String
      * @param tsk_id
      * @return redis key name
      */
-    private def makeKey(tsk_id: Long): String = s"$prefix:$tsk_id"
+    private def makeDraftRedisKey(tsk_id: Long): String = s"$prefix:$tsk_id"
+
+    /**
+     * build channel name for pub(publish) / sub(subscribe)
+     * @param tsk_id
+     * @return channel name
+     */
+    private def makeDraftRedisChannelName(tsk_id: Long): String = s"$makeDraftRedisKey:notification:$tsk_id"
 
     /**
      * save draft
      * @param tsk_id
-     * @param content
+     * @param updateDataContent
      * @return retuen success Future[] if the save command succeeds
      */
-    def save(tsk_id: Long, content: String): Future[Unit] = {
-        val key = makeKey(tsk_id)
-        val redisFuture: RedisFuture[String] = asyncStringCommands.setex(key, ttl, content)
-        // throw away the return result 
-        convertToScalaFuture(redisFuture).map(_=>())
+    def pushUpdate(tsk_id: Long, updateDataContent: String): Future[Unit] = {
+        val redisKeyData = makeDraftRedisKey(tsk_id)
+        val rpushRedisFuture: RedisFuture[java.lang.Long] = redisAsyncCommands.rpush(redisKeyData, updateDataContent)
+        val rpushScalaFuture: Future[java.lang.Long] = convertToScalaFuture(rpushRedisFuture)
+
+        val setTtlRedisFuture: RedisFuture[java.lang.Boolean] = asyncCommands.expire(redisKeyData, draftTtlSeconds)
+        val setTtlScalaFuture: Future[java.lang.Boolean] = convertToScalaFuture(setTtlRedisFuture)
+
+        rpushScalaFuture.zip(setTtlScalaFuture).map {
+            case (_: java.lang.Long, ttlSetSuccess: java.lang.Boolean) => ()
+        } 
     }
 
     /**
-     * get current draft
+     * get all updates
      * @param tsk_id
      * @return current draft text content
      */
-    def get(tsk_id: Long): Future[Option[String]] = {
-        val key = makeKey(tsk_id)
-        val redisFuture: RedisFuture[String] = asyncStringCommands.get(key)
-        convertToScalaFuture(redisFuture).map(Option(_))
+    def getAllUpdate(tsk_id: Long): Future[Option[String]] = {
+        val redisKeyData = makeDraftRedisKey(tsk_id)
+
+        // lettuce command "lrange" means List range (getting a list by range)
+        val lrangeRedisFuture: RedisFuture[java.util.List[String]] = asyncCommands.lrange(redisKeyData, 0, -1)
+        convertToScalaFuture(lrangeRedisFuture).map {
+            draftUpdateDataJavaList: java.util.List[String] => CollectionConverters.asScala(draftUpdateDataJavaList).toSeq
+        }
+    }
+
+    /**
+     * publish draft update redis notification
+     * @param tsk_id
+     * @param messageJson
+     * @return result of deletion
+     */
+    def publishUpdate(tsk_id: Long, messageJson: String): Future[Long] = {
+        val channelName: String = makeDraftRedisChannelName(tsk_id)
+        val publishRedisFuture: RedisFuture[java.lang.Long] = asyncCommands.publish(channelName, messageJson)
+
+        convertToScalaFuture(publishRedisFuture).map {
+            numberOfChannelSubscribers: java.lang.Long => numberOfChannelSubscribers.longValue()
+        }
     }
 
     /**
@@ -73,13 +104,13 @@ class TaskDraftRedisRepo(redisConnection: StatefulRedisConnection[String, String
      * @param tsk_id
      * @return result of deletion
      */
-    def delete(tsk_id: Long): Future[Boolean] = {
-        val key = makeKey(tsk_id)
+    def deleteDraft(tsk_id: Long): Future[Boolean] = {
+        val redisKeyData = makeDraftRedisKey(tsk_id)
         // lettuce client returns java.lang.Long because it's originally a java lib
-        val redisFuture: RedisFuture[java.lang.Long] = asyncCommands.del(key)
+        val deleteKeyRedisFuture: RedisFuture[java.lang.Long] = asyncCommands.del(redisKeyData)
         // check the result of deletion. if it's 1, return true
-        convertToScalaFuture(redisFuture).map(_ > 0)
+        convertToScalaFuture(deleteKeyRedisFuture).map {
+            deletedKeyCount: java.lang.Long => deletedKeyCount.longValue() > 0
+        }
     }
-    
-
 }
