@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.sprints.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Sprint (
+final case class Sprint (
         spr_id: Long, // PK
         spr_name: String,
 

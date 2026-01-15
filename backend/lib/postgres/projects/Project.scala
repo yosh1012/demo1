@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.projects.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Project(
+final case class Project(
         prj_id: Long, // PK
 
         prj_name: String,

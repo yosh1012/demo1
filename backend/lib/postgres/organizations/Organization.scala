@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.organizations.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDateTime, LocalDate}
 
-case class Organization(
+final case class Organization(
         org_id: Long, // PK
 
         org_name: String,

@@ -4,7 +4,7 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 import java.util.UUID  
 
-case class UserSession (
+final case class UserSession (
         ssn_id: UUID, // PK
 
         ssn_jwt_refresh_hashed_token: String,

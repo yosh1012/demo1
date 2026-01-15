@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.work_times.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class WorkTimeDTO (
+final case class WorkTimeDTO (
         wkt_id: Long, // PK
 
         wkt_hours: BigDecimal, // DEFAULT 0.00
@@ -20,4 +20,23 @@ case class WorkTimeDTO (
 
 object WorkTimeDTO {
     implicit val format: OFormat[WorkTimeDTO] = Json.format[WorkTimeDTO]
+
+    /**
+     * create work_time DTO entity
+     * @param work_time
+     * @return work_time DTO entity
+     */
+    def create(work_time: WorkTime): WorkTimeDTO = {
+        WorkTimeDTO(
+            wkt_id = work_time.wkt_id,
+            wkt_hours = work_time.wkt_hours,
+            wkt_date = work_time.wkt_date,
+            wkt_description = work_time.wkt_description,
+            wkt_created_at = work_time.wkt_created_at,
+            wkt_updated_at = work_time.wkt_updated_at,
+            wkt_deleted_at = work_time.wkt_deleted_at,
+            usr_id = work_time.usr_id,
+            tsk_id = work_time.tsk_id
+        )
+    }
 }

@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class TaskCategory (
+final case class TaskCategory (
         tsc_id: Long, // PK
 
         tsc_name: String,

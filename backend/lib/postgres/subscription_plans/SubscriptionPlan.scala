@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.subscription_plans.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDateTime
 
-case class SubscriptionPlan (
+final case class SubscriptionPlan (
     spl_id: Int, // PK
     spl_can_add_users: Boolean, // DEFALUT false
     spl_included_users_count: Int, // DEFAULT 1

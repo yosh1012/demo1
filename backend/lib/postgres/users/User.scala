@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.users.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class User(
+final case class User(
     usr_id: Long, // PK
     usr_email: String,
     usr_first_name: Option[String],

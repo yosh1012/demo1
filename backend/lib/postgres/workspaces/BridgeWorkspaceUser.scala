@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.workspaces.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class BridgeWorkspaceUser(
+final case class BridgeWorkspaceUser(
         wks_usr_id: Long, // PK
         
         wks_usr_is_manager: Boolean, // DEFAULT false

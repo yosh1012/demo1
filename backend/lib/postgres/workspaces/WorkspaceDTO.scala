@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.workspaces.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class WorkspaceDTO (
+final case class WorkspaceDTO (
         wks_id: Long, // PK
 
         wks_name: String,
@@ -23,4 +23,25 @@ case class WorkspaceDTO (
 
 object WorkspaceDTO {
     implicit val format: OFormat[WorkspaceDTO] = Json.format[WorkspaceDTO]
+
+    /**
+     * create workspace DTO entity
+     * @param workspace
+     * @return workspace DTO entity
+     */
+    def create(workspace: Workspace): WorkspaceDTO = {
+        WorkspaceDTO(
+            wks_id = workspace.wks_id,
+            wks_name = workspace.wks_name,
+            wks_description = workspace.wks_description,
+            wks_is_archived = workspace.wks_is_archived,
+            wks_archived_at = workspace.wks_archived_at,
+            wks_is_opened = workspace.wks_is_opened,
+            wks_created_at = workspace.wks_created_at,
+            wks_updated_at = workspace.wks_updated_at,
+            wks_deleted_at = workspace.wks_deleted_at,
+            org_id = workspace.org_id,
+            usr_id_who_archived = workspace.usr_id_who_archived
+        )
+    }
 }

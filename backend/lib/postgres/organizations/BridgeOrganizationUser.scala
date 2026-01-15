@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.organizations.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class BridgeOrganizationUser(
+final case class BridgeOrganizationUser(
         org_usr_id: Long, // PK
 
         org_usr_is_admin: Boolean, // DEFAULT false,

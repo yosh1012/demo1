@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Attachment (
+final case class Attachment (
         atc_id: Long, // PK
 
         atc_url: String,

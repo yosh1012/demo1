@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class BridgeTaskTaskCategory(
+final case class BridgeTaskTaskCategory(
         tsk_tsc_id: Long, // PK
 
         tsk_tsc_created_at: LocalDateTime, // DEFAULT CURRENT_TIMESTAMP,

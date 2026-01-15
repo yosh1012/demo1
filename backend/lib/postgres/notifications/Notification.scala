@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.notifications.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDateTime, LocalDate}
 
-case class Notification(
+final case class Notification(
         ntf_id: Long, // PK
 
         ntf_content: Option[String],

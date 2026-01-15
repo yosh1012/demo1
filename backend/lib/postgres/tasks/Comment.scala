@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Comment (
+final case class Comment (
         cmt_id: Long, // PK
 
         cmt_content: Option[String],

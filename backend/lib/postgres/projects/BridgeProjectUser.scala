@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.projects.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class BridgeProjectUser(
+final case class BridgeProjectUser(
         prj_usr_id: Long, // PK
 
         prj_usr_is_lead: Boolean, // DEFAULT false

@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.work_times.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class WorkTime (
+final case class WorkTime (
         wkt_id: Long, // PK
 
         wkt_hours: BigDecimal, // DEFAULT 0.00

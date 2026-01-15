@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.sprints.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class SprintDTO (
+final case class SprintDTO (
         spr_id: Long, // PK
         spr_name: String,
 
@@ -19,4 +19,22 @@ case class SprintDTO (
 
 object SprintDTO {
     implicit val format: OFormat[SprintDTO] = Json.format[SprintDTO]
+
+    /**
+     * create sprint DTO entity
+     * @param sprint
+     * @return sprint DTO entity
+     */
+    def create(sprint: Sprint): SprintDTO = {
+        SprintDTO(
+            spr_id = sprint.spr_id,
+            spr_name = sprint.spr_name,
+            spr_start_date = sprint.spr_start_date,
+            spr_end_date = sprint.spr_end_date,
+            spr_created_at = sprint.spr_created_at,
+            spr_updated_at = sprint.spr_updated_at,
+            spr_deleted_at = sprint.spr_deleted_at,
+            prj_id = sprint.prj_id
+        )
+    }
 }

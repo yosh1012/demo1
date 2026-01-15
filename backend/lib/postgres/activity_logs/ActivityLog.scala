@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.activity_logs.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class ActivityLog(
+final case class ActivityLog(
 	act_id: Long, // PK
 
 	act_action: String,
