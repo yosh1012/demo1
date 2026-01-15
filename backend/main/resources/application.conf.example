@@ -36,4 +36,7 @@ demo1-db {
 redis {
     host = "localhost"
     port = 6379
+    task_draft_prefix = "foo:bar" # Redis Style key-value
+    task_draft_ttl = 86400L
+    task_draft_max_length = 20000
 }
