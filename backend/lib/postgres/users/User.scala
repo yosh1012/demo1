@@ -9,6 +9,7 @@ case class User(
     usr_first_name: Option[String],
     usr_last_name: Option[String],
     usr_display_name: Option[String],
+    usr_hashed_password: String,
     usr_profile_image_url: Option[String],
     usr_timezone: Option[String],
     usr_lang_preference: Option[String],

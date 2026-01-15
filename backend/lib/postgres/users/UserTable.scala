@@ -10,6 +10,7 @@ class UserTable(tag: Tag) extends Table[User](tag, "users") {
     def usr_first_name = column[Option[String]]("usr_first_name")
     def usr_last_name = column[Option[String]]("usr_last_name")
     def usr_display_name = column[Option[String]]("usr_display_name")
+    def usr_hashed_password = column[String]("usr_hashed_password")
     def usr_profile_image_url = column[Option[String]]("usr_profile_image_url")
     def usr_timezone = column[Option[String]]("usr_timezone")
     def usr_lang_preference = column[Option[String]]("usr_lang_preference")
