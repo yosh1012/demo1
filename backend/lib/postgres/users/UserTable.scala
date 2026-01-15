@@ -22,7 +22,7 @@ class UserTable(tag: Tag) extends Table[User](tag, "users") {
 
     def * = (
         usr_id, usr_email, usr_first_name, usr_last_name,
-        usr_display_name, usr_profile_image_url, usr_timezone,
+        usr_display_name, usr_hashed_password, usr_profile_image_url, usr_timezone,
         usr_lang_preference, usr_last_login_at, usr_is_active,
         usr_created_at, usr_updated_at, usr_deleted_at
     ).mapTo[User]
