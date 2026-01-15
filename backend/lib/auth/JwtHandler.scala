@@ -41,7 +41,7 @@ object JwtHandler extends LazyLogging {
     /**
      * get user ID from access token
      * @param token
-     * @return usr_id or None: Option[Long]
+     * @return usr_id or None
      */
     def getIdFromToken(token: String): Option[Long] = {
         val verificationResult: Option[JwtClaim] = verifyToken(token).toOption
