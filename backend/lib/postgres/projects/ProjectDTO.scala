@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.projects.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Project(
+case class ProjectDTO (
         prj_id: Long, // PK
 
         prj_name: String,
@@ -20,3 +20,6 @@ case class Project(
         usr_id_who_archived: Option[Long] // REFERENCES users(usr_id)
 )
 
+object ProjectDTO {
+    implicit val format: OFormat[ProjectDTO] = Json.format[ProjectDTO]
+}

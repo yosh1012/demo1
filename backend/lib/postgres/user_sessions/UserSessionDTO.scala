@@ -4,7 +4,7 @@ import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 import java.util.UUID  
 
-case class UserSession (
+case class UserSessionDTO (
         ssn_id: UUID, // PK
 
         ssn_jwt_refresh_hashed_token: String,
@@ -20,3 +20,7 @@ case class UserSession (
 
         usr_id: Long // REFERENCES users(usr_id) ON DELETE CASCADE
 )
+
+object UserSessionDTO {
+    implicit val format: OFormat[UserSessionDTO] = Json.format[UserSessionDTO]
+}

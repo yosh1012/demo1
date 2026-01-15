@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.workspaces.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Workspace(
+case class WorkspaceDTO (
         wks_id: Long, // PK
 
         wks_name: String,
@@ -20,3 +20,7 @@ case class Workspace(
         
         usr_id_who_archived: Option[Long], // REFERENCES users(usr_id)
 )
+
+object WorkspaceDTO {
+    implicit val format: OFormat[WorkspaceDTO] = Json.format[WorkspaceDTO]
+}

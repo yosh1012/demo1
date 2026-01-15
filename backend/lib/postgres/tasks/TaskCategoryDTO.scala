@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class TaskCategory (
+case class TaskCategoryDTO (
         tsc_id: Long, // PK
 
         tsc_name: String,
@@ -14,3 +14,7 @@ case class TaskCategory (
 
         prj_id: Long // REFERENCES projects(prj_id) ON DELETE CASCADE
 )
+
+object TaskCategoryDTO {
+    implicit val format: OFormat[TaskCategoryDTO] = Json.format[TaskCategoryDTO]
+}

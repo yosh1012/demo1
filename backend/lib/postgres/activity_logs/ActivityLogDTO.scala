@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.activity_logs.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class ActivityLog(
+case class ActivityLogDTO (
 	act_id: Long, // PK
 
 	act_action: String,
@@ -15,3 +15,7 @@ case class ActivityLog(
 
 	usr_id: Long // REFERENCES users(usr_id) ON DELETE CASCADE
 )
+
+object ActivityLogDTO {
+    implicit val format: OFormat[ActivityLogDTO] = Json.format[ActivityLogDTO]
+}

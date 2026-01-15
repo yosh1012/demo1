@@ -3,13 +3,12 @@ package com.taskmanagement.lib.postgres.users.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class User(
+case class UserDTO(
     usr_id: Long, // PK
     usr_email: String,
     usr_first_name: Option[String],
     usr_last_name: Option[String],
     usr_display_name: Option[String],
-    usr_hashed_password: String,
     usr_profile_image_url: Option[String],
     usr_timezone: Option[String],
     usr_lang_preference: Option[String],
@@ -19,3 +18,7 @@ case class User(
     usr_updated_at: Option[LocalDateTime],
     usr_deleted_at: Option[LocalDateTime]
 )
+
+object UserDTO {
+    implicit val format: OFormat[UserDTO] = Json.format[UserDTO]
+}

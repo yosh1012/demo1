@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.notifications.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDateTime, LocalDate}
 
-case class Notification(
+case class NotificationDTO (
         ntf_id: Long, // PK
 
         ntf_content: Option[String],
@@ -18,3 +18,6 @@ case class Notification(
         usr_id: Long // REFERENCES users(usr_id) ON DELETE CASCADE
 )
 
+object NotificationDTO {
+    implicit val format: OFormat[NotificationDTO] = Json.format[NotificationDTO]
+}

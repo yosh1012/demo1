@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.subscription_plans.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDateTime
 
-case class SubscriptionPlan (
+case class SubscriptionPlanDTO (
     spl_id: Int, // PK
     spl_can_add_users: Boolean, // DEFALUT false
     spl_included_users_count: Int, // DEFAULT 1
@@ -25,3 +25,7 @@ case class SubscriptionPlan (
     spl_updated_at: Option[LocalDateTime],
     spl_deleted_at: Option[LocalDateTime]
 )
+
+object SubscriptionPlanDTO {
+    implicit val format: OFormat[SubscriptionPlanDTO] = Json.format[SubscriptionPlanDTO]
+}

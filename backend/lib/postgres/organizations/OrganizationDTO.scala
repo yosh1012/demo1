@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.organizations.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDateTime, LocalDate}
 
-case class Organization(
+case class OrganizationDTO (
         org_id: Long, // PK
 
         org_name: String,
@@ -24,3 +24,6 @@ case class Organization(
         usr_id: Long // REFERENCES users(usr_id) ON DELETE CASCADE
 )
 
+object OrganizationDTO {
+    implicit val format: OFormat[OrganizationDTO] = Json.format[OrganizationDTO]
+}

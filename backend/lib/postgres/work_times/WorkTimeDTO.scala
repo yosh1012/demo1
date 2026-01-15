@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.work_times.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class WorkTime (
+case class WorkTimeDTO (
         wkt_id: Long, // PK
 
         wkt_hours: BigDecimal, // DEFAULT 0.00
@@ -18,3 +18,6 @@ case class WorkTime (
         tsk_id: Long // REFERENCES tasks(tsk_id) ON DELETE CASCADE
 )
 
+object WorkTimeDTO {
+    implicit val format: OFormat[WorkTimeDTO] = Json.format[WorkTimeDTO]
+}

@@ -3,7 +3,7 @@ package com.taskmanagement.lib.postgres.tasks.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}
 
-case class Attachment (
+case class AttachmentDTO (
         atc_id: Long, // PK
 
         atc_url: String,
@@ -19,3 +19,7 @@ case class Attachment (
         tsk_id: Long, // REFERENCES tasks(tsk_id) ON DELETE CASCADE,
         cmt_id: Option[Long], // REFERENCES comments(cmt_id)
 )
+
+object AttachmentDTO {
+    implicit val format: OFormat[AttachmentDTO] = Json.format[AttachmentDTO]
+}
