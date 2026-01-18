@@ -1,6 +1,6 @@
 package com.taskmanagement.api.v1.me.tasks.demo1
 
-import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route
 
 class TasksRoutes(authService: AuthService) {

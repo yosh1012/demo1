@@ -1,6 +1,6 @@
 package com.taskmanagement.api.v1.admin.projects.demo1
 
-import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route
 
 class AdminProjectsRoutes(authService: AuthService) {

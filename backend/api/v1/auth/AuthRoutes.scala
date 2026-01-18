@@ -1,7 +1,7 @@
 package com.taskmanagement.api.v1.auth.demo1
 
 // dependencies
-import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route
 
 class AuthRoutes(authService: AuthService) {

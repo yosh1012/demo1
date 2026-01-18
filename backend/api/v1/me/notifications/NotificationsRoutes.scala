@@ -1,6 +1,6 @@
 package com.taskmanagement.api.v1.me.notifications.demo1
 
-import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route
 
 class NotificationsRoutes(authService: AuthService) {

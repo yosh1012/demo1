@@ -1,6 +1,6 @@
 package com.taskmanagement.api.v1.me.related_tasks.demo1
 
-import org.apache.pekko.http.scaladsl.server.Directives._
+import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route
 
 class RelatedTasksRoutes(authService: AuthService) {
