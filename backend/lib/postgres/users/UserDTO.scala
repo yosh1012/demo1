@@ -27,7 +27,7 @@ object UserDTO {
      * @param user
      * @return user DTO entity
      */
-    def create(user: User): UserDTO = {
+    def createDTO(user: User): UserDTO = {
         UserDTO(
             usr_id = user.usr_id,
             usr_email = user.usr_email,

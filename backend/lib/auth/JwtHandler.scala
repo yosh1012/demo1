@@ -34,7 +34,7 @@ object JwtHandler extends LazyLogging {
      * @param token
      * @return result of verification: Try[JwtClaim] => Success[JwtClaim] or Failure
      */
-    def verifyToken(token: String): Try[JwtClaim] = {
+    def verifyToken(token: String): Try[JwtClaim] = { // use Try[] monad because it's parsing String from outside
         Jwt.decode(token, secretKey, Seq(algorithm))
     }
 
