@@ -5,9 +5,10 @@ import org.apache.pekko.http.scaladsl.model.headers._
 import org.apache.pekko.http.scaladsl.model.HttpMethods._ // GET POST PUT DELETE etc
 import org.apache.pekko.http.scaladsl.model.{HttpMethod, HttpResponse, StatusCodes}
 import org.apache.pekko.http.scaladsl.server.{Directives, Directive0, Route}
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters._ // wildcard
+import com.typesafe.scalalogging.LazyLogging
 
-object CorsHandler{
+object CorsHandler extends LazyLogging {
 
     private val config = ConfigFactory.load()
     private val allowedOrigins: Set[String] = 
@@ -28,7 +29,6 @@ object CorsHandler{
             `Access-Control-Allow-Credentials`(true)
         )
     }
-
 
     /**
      * wrap a current Route with CORS header

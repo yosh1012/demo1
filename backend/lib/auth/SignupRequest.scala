@@ -4,8 +4,9 @@ package com.taskmanagement.lib.auth.demo1
 import play.api.libs.json.{Json, OFormat}
 import java.time.LocalDateTime
 import com.taskmanagement.lib.postgres.users.demo1.User
+import com.typesafe.scalalogging.LazyLogging
 
-final case class SignupRequest (
+final case class SignupRequest extends LazyLogging (
     email: String,
     password: String,
     display_name: Option[String]

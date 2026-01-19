@@ -3,11 +3,12 @@ package com.taskmanagement.lib.auth.demo1
 // dependencies
 import org.apache.pekko.http.scaladsl.server.{Directives => D, Directive1, AuthenticationFailedRejection}
 import org.apache.pekko.http.scaladsl.model.headers.{Authorization, HttpChallenge, OAuth2BearerToken}
+import com.typesafe.scalalogging.LazyLogging
 
 // OAuth2BearerToken is to handle OAuth2Bearer token, not handling connection with OAuth authentication servers
 
 // singleton
-object AuthHandler {
+object AuthHandler extends LazyLogging {
     private val bearerChallenge: HttpChallenge = HttpChallenge("Bearer", "demo1")
 
     /**

@@ -4,8 +4,9 @@ import org.apache.pekko.http.scaladsl.marshalling.{Marshaller, ToEntityMarshalle
 import org.apache.pekko.http.scaladsl.model.{HttpEntity, MediaTypes}
 import org.apache.pekko.http.scaladsl.unmarshalling.{FromEntityUnmarshaller, Unmarshaller}
 import play.api.libs.json._
+import com.typesafe.scalalogging.LazyLogging
 
-trait JsonSupport {
+trait JsonSupport extends LazyLogging {
     implicit def playJsonUnmarshaller[TargetClass](implicit reader: Reads[TargetClass]): FromEntityUnmarshaller[TargetClass] =
         Unmarshaller.byteStringUnmarshaller
         .forContentTypes(MediaTypes.`application/json`)

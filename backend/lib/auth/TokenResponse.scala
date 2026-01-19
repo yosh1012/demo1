@@ -3,6 +3,7 @@ package com.taskmanagement.lib.auth.demo1
 // dependencies
 import play.api.libs.json.{Json, OFormat}
 import com.taskmanagement.lib.postgres.users.demo1.UserDTO
+import com.typesafe.scalalogging.LazyLogging
 
 final case class TokenResponse(
     access_token: String,
@@ -12,6 +13,6 @@ final case class TokenResponse(
     user: UserDTO
 )
 
-object TokenResponse {
+object TokenResponse extends LazyLogging {
     implicit val format: OFormat[TokenResponse] = Json.format[TokenResponse]
 }

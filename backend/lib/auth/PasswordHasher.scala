@@ -2,9 +2,10 @@ package com.taskmanagement.lib.auth.demo1
 
 // dependencies
 import org.mindrot.jbcrypt.BCrypt
+import com.typesafe.scalalogging.LazyLogging
 
 // singleton
-object PasswordHasher {
+object PasswordHasher extends LazyLogging {
     private val BCryptRounds: Int = 10
 
     /**

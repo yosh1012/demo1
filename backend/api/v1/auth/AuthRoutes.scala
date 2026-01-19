@@ -7,8 +7,9 @@ import org.apache.pekko.http.scaladsl.model.StatusCodes
 import com.github.pjfanning.pekkohttpplayjson.PlayJsonSupport
 import scala.util.{Success, Failure}
 import com.taskmanagement.lib.auth.demo1.{SignupRequest, LoginRequest, TokenResponse}
+import com.typesafe.scalalogging.LazyLogging
 
-class AuthRoutes(authService: AuthService) extends PlayJsonSupport {
+class AuthRoutes(authService: AuthService) extends PlayJsonSupport with LazyLogging {
     val routes: Route = D.pathPrefix("auth") {
         D.concat(
             D.path("signup") {
