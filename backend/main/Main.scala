@@ -1,17 +1,29 @@
 package com.taskmanagement.main.demo1
 
 import slick.jdbc.PostgresProfile.api._
-import com.typesafe.config.ConfigFactory
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import scala.concurrent.ExecutionContext
+import com.typesafe.config.{ConfigFactory, Config}
+import com.typesafe.scalalogging.LazyLogging
+import scala.concurrent.{Await, ExecutionContext}
+import scala.util.{Success, Failure}
+import scala.concurrent.duration._ // wildcard
 
-object Main extends App {
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.http.scaladsl.Http
+import org.apache.pekko.http.scaladsl.server.Route
 
-    // implicit Execution Context as global one, runs for every process
-    implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.global
+import com.taskmanagement.lib.http.demo1.CorsHandler
+import com.taskmanagement.lib.postgres.users.demo1.UserRepository
+import com.taskmanagement.api.v1.auth.demo1.AuthService
+import com.taskmanagement.api.v1.auth.demo1.AuthRoutes
 
-    val applicationConfig = ConfigFactory.load()
+object Main extends App with LazyLogging {
+
+    val config: Config = ConfigFactory.load()
+    val httpInterface: String = config.getString("http.interface")
+    val httpPort: Int = config.getInt("http.port")
+
+    implicit val actorSystem: ActorSystem = ActorSystem("tsumiki-api")
+    implicit val executionContext: ExecutionContext = actorSystem.dispatcher
 
     // config debug 
     /*
@@ -23,17 +35,36 @@ object Main extends App {
     println("end debug")
     */
 
-    val dbConnectionPool = Database.forConfig("demo1-db.db", applicationConfig)
+    val dbConnectionPool: Database = Database.forConfig("demo1-db.db", config)
+    val userRepo: UserRepository = new UserRepository(dbConnectionPool)
+    val authService: AuthService = new AuthService(userRepo)
+    val authRoutes: AuthRoutes = new AuthRoutes(authService)
+    val healthRoutes: HealthRoutes = new HealthRoutes()
+
+    // integrate all routes
+    val allRoutes: Route = Directives.concat(
+        authRoutes.routes,
+        authRoutes.routes
+    )
+
+    val corsWrappedRoutes: Route = CorsHandler.wrapWithCors(allRoutes)
+    val serverBinding = Http().newServerAt(httpInterface, httpPort).bind(corsWrappedRoutes)
+
+    serverBinding.onComplete {
+        case Success(binding) =>
+            val address = binding.localAddress
+            logger.info(s"Server started at http://${address.getHostString}:${address.getPort}")
+        
+        case Failure(ex) =>
+            logger.error(s"Failed to bind HTTP server: ${ex.getMessage}")
+            actorSystem.terminate()
+    }
     
     // connecting test starts
-    println("Connecting to database...")
-
-    val connectionTestQuery = sql"SELECT 1".as[Int]
-
-    val connectionTestResult = Await.result(dbConnectionPool.run(connectionTestQuery), 10.seconds)
-
-    println(s"Connection successful: $connectionTestResult")
-
-    dbConnectionPool.close()
+    //println("Connecting to database...")
+    //val connectionTestQuery = sql"SELECT 1".as[Int]
+    //val connectionTestResult = Await.result(dbConnectionPool.run(connectionTestQuery), 10.seconds)
+    //println(s"Connection successful: $connectionTestResult")
+    //dbConnectionPool.close()
     // connecting test ends
 }
