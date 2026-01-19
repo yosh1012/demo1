@@ -1,0 +1,13 @@
+load("@rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "api_health",
+    srcs = glob(["*.scala"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_demo1//:org_apache_pekko_pekko_http_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_http_core_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_actor_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_stream_2_13",
+    ],
+)
