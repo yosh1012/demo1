@@ -6,28 +6,21 @@
 
 #### backend
 
-- Scala (JVM)
-  - the goal is learning modern coding with Scala
-  - Integration of FP and OOP, and less necessity of redundunt codes.
-  - My target company (want to be hired) uses Scala
-  - JVM these days has good performance and less GC memory leaking problem.
+- Scala (JVM) with Bazel
+  - reducing build time and make debugging easier
+  - using pekko framework to learn actormodel, and for good performance and availability
     
 #### frontend
 
 - React with Typescript
-  - will use React-native for mobile platform in the future
-  - pursuing good performance with virtual DOM
+  - debugging with vite
+  - using Bazel to build a distribution file
 - tailwind (for modern styling practice)
 
 #### DB
 
 - PostgreSQL (for scalability)
-
-#### Build
-
-- Bazel
-  - for mono repo built project
-  - My target company (want to be hired) uses Bazel
+- Redis (in-memory, for real-time concurrent editing feature)
 
 ### env confirmation
 
@@ -42,10 +35,10 @@ OpenJDK Runtime Environment (build 21.0.8+9-Ubuntu-0ubuntu124.04.1)
 OpenJDK 64-Bit Server VM (build 21.0.8+9-Ubuntu-0ubuntu124.04.1, mixed mode, sharing)
 
 yoshi@DESKTOP-88R3T37:~/demo1$ psql --version
-psql (PostgreSQL) 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
+psql (PostgreSQL) 16.11 (Ubuntu 16.11-0ubuntu0.24.04.1)
 
 yoshi@DESKTOP-88R3T37:~/demo1$ node --version
-v18.20.8
+v20.18.2
 
 yoshi@DESKTOP-88R3T37:~/demo1$ npm --version
 10.8.2
@@ -56,20 +49,32 @@ yoshi@DESKTOP-88R3T37:~/demo1$ npm --version
 ### checking bazel dependencies
 
 ```
-\
+
 yoshi@DESKTOP-88R3T37:~/demo1$ bazel query @maven_demo1//...
-INFO: Options provided by the client:
-  Inherited 'common' options: --isatty=1 --terminal_columns=151
-INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
-  Inherited 'common' options: --enable_bzlmod --announce_rc
 @maven_demo1//:ch_qos_logback_logback_classic
 @maven_demo1//:ch_qos_logback_logback_classic_1_4_14
 @maven_demo1//:ch_qos_logback_logback_core
 @maven_demo1//:ch_qos_logback_logback_core_1_4_14
+@maven_demo1//:com_fasterxml_jackson_core_jackson_annotations
+@maven_demo1//:com_fasterxml_jackson_core_jackson_annotations_2_15_2
+@maven_demo1//:com_fasterxml_jackson_core_jackson_core
+@maven_demo1//:com_fasterxml_jackson_core_jackson_core_2_15_2
+@maven_demo1//:com_fasterxml_jackson_core_jackson_databind
+@maven_demo1//:com_fasterxml_jackson_core_jackson_databind_2_15_2
+@maven_demo1//:com_fasterxml_jackson_datatype_jackson_datatype_jdk8
+@maven_demo1//:com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_14_3
+@maven_demo1//:com_fasterxml_jackson_datatype_jackson_datatype_jsr310
+@maven_demo1//:com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_14_3
 @maven_demo1//:com_github_jwt_scala_jwt_core_2_13
 @maven_demo1//:com_github_jwt_scala_jwt_core_2_13_9_4_5
+@maven_demo1//:com_github_pjfanning_pekko_http_play_json_2_13
+@maven_demo1//:com_github_pjfanning_pekko_http_play_json_2_13_2_1_0
 @maven_demo1//:com_typesafe_config
 @maven_demo1//:com_typesafe_config_1_4_3
+@maven_demo1//:com_typesafe_play_play_functional_2_13
+@maven_demo1//:com_typesafe_play_play_functional_2_13_2_10_4
+@maven_demo1//:com_typesafe_play_play_json_2_13
+@maven_demo1//:com_typesafe_play_play_json_2_13_2_10_4
 @maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13
 @maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13_3_9_5
 @maven_demo1//:com_typesafe_slick_slick_2_13
@@ -81,8 +86,24 @@ INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
 @maven_demo1//:com_zaxxer_HikariCP
 @maven_demo1//:com_zaxxer_HikariCP_4_0_3
 @maven_demo1//:defs
-@maven_demo1//:io_spray_spray_json_2_13
-@maven_demo1//:io_spray_spray_json_2_13_1_3_6
+@maven_demo1//:io_lettuce_lettuce_core
+@maven_demo1//:io_lettuce_lettuce_core_6_3_1_RELEASE
+@maven_demo1//:io_netty_netty_buffer
+@maven_demo1//:io_netty_netty_buffer_4_1_104_Final
+@maven_demo1//:io_netty_netty_codec
+@maven_demo1//:io_netty_netty_codec_4_1_104_Final
+@maven_demo1//:io_netty_netty_common
+@maven_demo1//:io_netty_netty_common_4_1_104_Final
+@maven_demo1//:io_netty_netty_handler
+@maven_demo1//:io_netty_netty_handler_4_1_104_Final
+@maven_demo1//:io_netty_netty_resolver
+@maven_demo1//:io_netty_netty_resolver_4_1_104_Final
+@maven_demo1//:io_netty_netty_transport
+@maven_demo1//:io_netty_netty_transport_4_1_104_Final
+@maven_demo1//:io_netty_netty_transport_native_unix_common
+@maven_demo1//:io_netty_netty_transport_native_unix_common_4_1_104_Final
+@maven_demo1//:io_projectreactor_reactor_core
+@maven_demo1//:io_projectreactor_reactor_core_3_6_2
 @maven_demo1//:org_apache_pekko_pekko_actor_2_13
 @maven_demo1//:org_apache_pekko_pekko_actor_2_13_1_0_3
 @maven_demo1//:org_apache_pekko_pekko_actor_testkit_typed_2_13
@@ -93,8 +114,6 @@ INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
 @maven_demo1//:org_apache_pekko_pekko_http_2_13_1_0_1
 @maven_demo1//:org_apache_pekko_pekko_http_core_2_13
 @maven_demo1//:org_apache_pekko_pekko_http_core_2_13_1_0_1
-@maven_demo1//:org_apache_pekko_pekko_http_spray_json_2_13
-@maven_demo1//:org_apache_pekko_pekko_http_spray_json_2_13_1_0_1
 @maven_demo1//:org_apache_pekko_pekko_http_testkit_2_13
 @maven_demo1//:org_apache_pekko_pekko_http_testkit_2_13_1_0_1
 @maven_demo1//:org_apache_pekko_pekko_parsing_2_13
@@ -109,6 +128,8 @@ INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
 @maven_demo1//:org_apache_pekko_pekko_testkit_2_13_1_0_3
 @maven_demo1//:org_checkerframework_checker_qual
 @maven_demo1//:org_checkerframework_checker_qual_3_41_0
+@maven_demo1//:org_hashids_hashids
+@maven_demo1//:org_hashids_hashids_1_0_3
 @maven_demo1//:org_mindrot_jbcrypt
 @maven_demo1//:org_mindrot_jbcrypt_0_4
 @maven_demo1//:org_parboiled_parboiled_2_13
@@ -122,7 +143,7 @@ INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
 @maven_demo1//:org_scala_lang_scala_library
 @maven_demo1//:org_scala_lang_scala_library_2_13_13
 @maven_demo1//:org_scala_lang_scala_reflect
-@maven_demo1//:org_scala_lang_scala_reflect_2_13_10
+@maven_demo1//:org_scala_lang_scala_reflect_2_13_12
 @maven_demo1//:org_scalactic_scalactic_2_13
 @maven_demo1//:org_scalactic_scalactic_2_13_3_2_17
 @maven_demo1//:org_scalatest_scalatest_2_13
@@ -159,8 +180,9 @@ INFO: Reading rc options for 'query' from /home/yoshi/demo1/.bazelrc:
 @maven_demo1//:org_slf4j_slf4j_api_2_0_12
 @maven_demo1//:outdated
 @maven_demo1//:pin
+yoshi@DESKTOP-88R3T37:~/demo1$ 
 ```
 
 ## deployment
 
-plan to deploy on AWS
+plan to deploy on fly.io at first
