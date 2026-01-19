@@ -10,13 +10,17 @@ import scala.concurrent.duration._ // wildcard
 import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.http.scaladsl.server.Route
+import org.apache.pekko.http.scaladsl.server.Directives
 
 import com.taskmanagement.lib.http.demo1.CorsHandler
 import com.taskmanagement.lib.postgres.users.demo1.UserRepository
 import com.taskmanagement.api.v1.auth.demo1.AuthService
 import com.taskmanagement.api.v1.auth.demo1.AuthRoutes
+import com.taskmanagement.api.v1.health.demo1.HealthRoutes
 
 object Main extends App with LazyLogging {
+
+    System.setProperty("java.net.preferIPv4Stack", "true") // to use IPv4
 
     val config: Config = ConfigFactory.load()
     val httpInterface: String = config.getString("http.interface")
@@ -43,7 +47,7 @@ object Main extends App with LazyLogging {
 
     // integrate all routes
     val allRoutes: Route = Directives.concat(
-        authRoutes.routes,
+        healthRoutes.routes,
         authRoutes.routes
     )
 
@@ -51,13 +55,21 @@ object Main extends App with LazyLogging {
     val serverBinding = Http().newServerAt(httpInterface, httpPort).bind(corsWrappedRoutes)
 
     serverBinding.onComplete {
-        case Success(binding) =>
-            val address = binding.localAddress
+        case Success(serverBinding) =>
+            val address = serverBinding.localAddress
             logger.info(s"Server started at http://${address.getHostString}:${address.getPort}")
         
         case Failure(ex) =>
             logger.error(s"Failed to bind HTTP server: ${ex.getMessage}")
             actorSystem.terminate()
+    }
+
+    // shutdown
+    sys.addShutdownHook {
+        serverBinding.flatMap(_.unbind()).onComplete { _ =>
+            dbConnectionPool.close()
+            actorSystem.terminate()
+        }
     }
     
     // connecting test starts

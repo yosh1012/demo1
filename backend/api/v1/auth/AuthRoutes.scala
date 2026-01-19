@@ -6,7 +6,7 @@ import org.apache.pekko.http.scaladsl.server.Route
 import org.apache.pekko.http.scaladsl.model.StatusCodes
 import com.github.pjfanning.pekkohttpplayjson.PlayJsonSupport
 import scala.util.{Success, Failure}
-import com.taskmanagement.lib.auth.demo1.{SignupRequest, LoginRequest, TokenResponse}
+import com.taskmanagement.lib.auth.demo1.{SignupRequest, LoginRequest, TokenResponse, AuthHandler}
 import com.typesafe.scalalogging.LazyLogging
 
 class AuthRoutes(authService: AuthService) extends PlayJsonSupport with LazyLogging {
@@ -30,21 +30,25 @@ class AuthRoutes(authService: AuthService) extends PlayJsonSupport with LazyLogg
             },
             D.path("password") {
                 D.post {
-                    // TODO
+                    D.complete(StatusCodes.NotImplemented, "reset user password") // TODO
                     }
-                }
             },
+
             D.path("login") {
                 D.post {
-                    D.onComplete(D.as[LoginRequest]) { (loginRequestData: LoginRequest) =>
-                        case Success(tokenResponseData: TokenResponse) =>
-                            D.complete(StatusCodes.OK, tokenResponseData) // 200
+                    D.entity(D.as[LoginRequest]) { (loginRequestData: LoginRequest) =>
+                        D.onComplete(authService.login(loginRequestData)) {
+                            case Success(tokenResponseData: TokenResponse) =>
+                                D.complete(StatusCodes.OK, tokenResponseData) // 200
                         
-                        case Failure(ex: IllegalArgumentException) =>
-                            D.complete(StatusCodes.Unauthorized, ex.getMessage) // 401
+                            case Failure(ex: IllegalArgumentException) =>
+                                D.complete(StatusCodes.Unauthorized, ex.getMessage) // 401
 
-                        case Failure(ex: Throwable) ->
-                            D.complete(StatusCodes.InternalServerError, "Internal server error") // 500
+                            case Failure(ex: Throwable) =>
+                                D.complete(StatusCodes.InternalServerError, "Internal server error") // 500
+                        }
+
+                    }
                 }
             },
             D.path("verify") {
@@ -56,7 +60,7 @@ class AuthRoutes(authService: AuthService) extends PlayJsonSupport with LazyLogg
             },
             D.path("refresh") {
                 D.post {
-                    D.complete("refresh user's access token") // TODO
+                    D.complete(StatusCodes.NotImplemented, "refresh user's access token") // TODO
                 }
             },
             D.path("logout") {

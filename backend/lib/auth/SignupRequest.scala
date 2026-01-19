@@ -6,13 +6,13 @@ import java.time.LocalDateTime
 import com.taskmanagement.lib.postgres.users.demo1.User
 import com.typesafe.scalalogging.LazyLogging
 
-final case class SignupRequest extends LazyLogging (
+final case class SignupRequest (
     email: String,
     password: String,
     display_name: Option[String]
 )
 
-object SignupRequest {
+object SignupRequest extends LazyLogging {
     implicit val format: OFormat[SignupRequest] = Json.format[SignupRequest]
 
     /**

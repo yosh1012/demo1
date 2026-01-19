@@ -13,10 +13,24 @@ scala_binary(
         "@maven_demo1//:com_typesafe_config",
         "@maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13",
         "@maven_demo1//:org_slf4j_slf4j_api",
-
         "@maven_demo1//:ch_qos_logback_logback_classic",
+
         "@maven_demo1//:com_typesafe_slick_slick_2_13",
         "@maven_demo1//:org_postgresql_postgresql",
         "@maven_demo1//:com_typesafe_slick_slick_hikaricp_2_13",
+
+        "@maven_demo1//:org_apache_pekko_pekko_actor_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_stream_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_http_2_13",
+        "@maven_demo1//:org_apache_pekko_pekko_http_core_2_13",
+
+        "@maven_demo1//:com_github_pjfanning_pekko_http_play_json_2_13",
+
+        "//backend/lib/http:http",
+        "//backend/lib/postgres/users:users",
+        "//backend/lib/auth:auth",
+
+        "//backend/api/v1/auth:api_auth",
+        "//backend/api/v1/health:api_health",
     ],
 )

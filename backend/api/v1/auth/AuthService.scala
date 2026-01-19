@@ -9,7 +9,7 @@ import com.taskmanagement.lib.auth.demo1.{PasswordHasher, JwtHandler, TokenRespo
 
 class AuthService(userRepo: UserRepository)(implicit ec: ExecutionContext) extends LazyLogging {
     private val config: Config = ConfigFactory.load()
-    private val accessTokenExpirationSeconds: Long = config.getLong("auth.jwt-expiration-seconds")
+    private val accessTokenExpirationSeconds: Long = config.getLong("jwt.access-token-expiration-seconds")
 
     /**
      * generate token response from User Entity
