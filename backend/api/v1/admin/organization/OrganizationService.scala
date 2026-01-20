@@ -1,4 +1,4 @@
-package com.taskmanagement.api.v1.admin.organization.demo1
+package demo1.taskmanagement.api.v1.admin.organization
 
 import scala.concurrent.{Future, ExecutionContext}
 

@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.hashids.demo1
+package demo1.taskmanagement.lib.hashids
 
 // dependencies
 import com.typesafe.config.ConfigFactory

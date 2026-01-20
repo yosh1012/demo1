@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.postgres.tasks.demo1
+package demo1.taskmanagement.lib.postgres.tasks
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future

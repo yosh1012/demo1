@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.postgres.activity_logs.demo1
+package demo1.taskmanagement.lib.postgres.activity_logs
 
 import slick.jdbc.PostgresProfile.api._
 import scala.concurrent.Future

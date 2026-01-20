@@ -1,4 +1,4 @@
-package com.taskmanagement.api.v1.me.notifications.demo1
+package demo1.taskmanagement.api.v1.me.notifications
 
 import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route

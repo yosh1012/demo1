@@ -1,4 +1,4 @@
-package com.taskmanagement.api.v1.me.related_tasks.demo1
+package demo1.taskmanagement.api.v1.me.related_tasks
 
 import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route

@@ -1,8 +1,8 @@
-package com.taskmanagement.lib.auth.demo1
+package demo1.taskmanagement.lib.auth
 
 // dependencies
 import play.api.libs.json.{Json, OFormat}
-import com.taskmanagement.lib.postgres.users.demo1.UserDTO
+import demo1.taskmanagement.lib.postgres.users.UserDTO
 import com.typesafe.scalalogging.LazyLogging
 
 final case class TokenResponse(

@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.http.demo1
+package demo1.taskmanagement.lib.http
 
 import com.typesafe.config.ConfigFactory
 import org.apache.pekko.http.scaladsl.model.headers._

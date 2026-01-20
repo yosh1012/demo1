@@ -1,4 +1,4 @@
-package com.taskmanagement.api.v1.admin.workspaces.demo1
+package demo1.taskmanagement.api.v1.admin.workspaces
 
 import org.apache.pekko.http.scaladsl.server.Directives
 import org.apache.pekko.http.scaladsl.server.Route

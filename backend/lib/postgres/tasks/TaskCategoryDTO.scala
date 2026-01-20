@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.postgres.tasks.demo1
+package demo1.taskmanagement.lib.postgres.tasks
 
 import play.api.libs.json.{Json, OFormat}
 import java.time.{LocalDate, LocalDateTime}

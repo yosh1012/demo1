@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.redis.task_draft.demo1
+package demo1.taskmanagement.lib.redis.task_draft
 
 // dependencies
 import play.api.libs.json._

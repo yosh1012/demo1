@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.http.demo1
+package demo1.taskmanagement.lib.http
 
 // dependencies
 import org.apache.pekko.actor.ActorSystem
@@ -8,6 +8,3 @@ import org.apache.pekko.http.scaladsl.model.ws.{Message, TextMessage}
 import scala.concurrent.{Future, ExecutionContext}
 import com.typesafe.scalalogging.LazyLogging
 import play.api.libs.json._
-
-//import com.taskmanagement.lib.redis.demo1.TaskExplanationStorage
-//import com.taskmanagement.lib.redis.demo1.{TaskExplanationRedisRepo}

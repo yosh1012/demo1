@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.http.demo1
+package demo1.taskmanagement.lib.http
 
 import org.apache.pekko.http.scaladsl.marshalling.{Marshaller, ToEntityMarshaller}
 import org.apache.pekko.http.scaladsl.model.{HttpEntity, MediaTypes}

@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.redis.connector.demo1
+package demo1.taskmanagement.lib.redis.connector
 
 // dependencies
 import com.typesafe.config.ConfigFactory

@@ -1,4 +1,4 @@
-package com.taskmanagement.lib.auth.demo1
+package demo1.taskmanagement.lib.auth
 
 // dependencies
 import org.mindrot.jbcrypt.BCrypt

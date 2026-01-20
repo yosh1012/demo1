@@ -1,4 +1,4 @@
-package com.taskmanagement.api.v1.auth.demo1
+package demo1.taskmanagement.api.v1.auth
 
 // dependencies
 import org.apache.pekko.http.scaladsl.server.{Directives => D}
@@ -6,8 +6,9 @@ import org.apache.pekko.http.scaladsl.server.Route
 import org.apache.pekko.http.scaladsl.model.StatusCodes
 import com.github.pjfanning.pekkohttpplayjson.PlayJsonSupport
 import scala.util.{Success, Failure}
-import com.taskmanagement.lib.auth.demo1.{SignupRequest, LoginRequest, TokenResponse, AuthHandler}
 import com.typesafe.scalalogging.LazyLogging
+
+import demo1.taskmanagement.lib.auth.{SignupRequest, LoginRequest, TokenResponse, AuthHandler}
 
 class AuthRoutes(authService: AuthService) extends PlayJsonSupport with LazyLogging {
     val routes: Route = D.pathPrefix("auth") {

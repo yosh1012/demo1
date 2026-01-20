@@ -1,11 +1,12 @@
-package com.taskmanagement.api.v1.auth.demo1
+package demo1.taskmanagement.api.v1.auth
 
 // dependencies
 import com.typesafe.config.{ConfigFactory, Config}
 import com.typesafe.scalalogging.LazyLogging
 import scala.concurrent.{Future, ExecutionContext}
-import com.taskmanagement.lib.postgres.users.demo1.{UserRepository, UserDTO, User}
-import com.taskmanagement.lib.auth.demo1.{PasswordHasher, JwtHandler, TokenResponse, LoginRequest, SignupRequest, RefreshTokenRequest}
+
+import demo1.taskmanagement.lib.postgres.users.{UserRepository, UserDTO, User}
+import demo1.taskmanagement.lib.auth.{PasswordHasher, JwtHandler, TokenResponse, LoginRequest, SignupRequest, RefreshTokenRequest}
 
 class AuthService(userRepo: UserRepository)(implicit ec: ExecutionContext) extends LazyLogging {
     private val config: Config = ConfigFactory.load()
