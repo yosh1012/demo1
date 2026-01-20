@@ -1,4 +1,4 @@
-package com.taskmanagement.main.demo1
+package demo1.taskmanagement.main
 
 import slick.jdbc.PostgresProfile.api._
 import com.typesafe.config.{ConfigFactory, Config}
@@ -12,11 +12,14 @@ import org.apache.pekko.http.scaladsl.Http
 import org.apache.pekko.http.scaladsl.server.Route
 import org.apache.pekko.http.scaladsl.server.Directives
 
-import com.taskmanagement.lib.http.demo1.CorsHandler
-import com.taskmanagement.lib.postgres.users.demo1.UserRepository
-import com.taskmanagement.api.v1.auth.demo1.AuthService
-import com.taskmanagement.api.v1.auth.demo1.AuthRoutes
-import com.taskmanagement.api.v1.health.demo1.HealthRoutes
+import demo1.taskmanagement.lib.http.CorsHandler
+import demo1.taskmanagement.lib.postgres.users.UserRepository
+import demo1.taskmanagement.lib.postgres.tasks.TaskRepository
+import demo1.taskmanagement.api.v1.auth.AuthService
+import demo1.taskmanagement.api.v1.auth.AuthRoutes
+import demo1.taskmanagement.api.v1.health.HealthRoutes
+import demo1.taskmanagement.api.v1.me.tasks.TasksService
+import demo1.taskmanagement.api.v1.me.tasks.TasksRoutes
 
 object Main extends App with LazyLogging {
 
@@ -41,14 +44,21 @@ object Main extends App with LazyLogging {
 
     val dbConnectionPool: Database = Database.forConfig("demo1-db.db", config)
     val userRepo: UserRepository = new UserRepository(dbConnectionPool)
+    val taskRepo: TaskRepository = new TaskRepository(dbConnectionPool)
     val authService: AuthService = new AuthService(userRepo)
+    val tasksService: TasksService = new TasksService(taskRepo)
     val authRoutes: AuthRoutes = new AuthRoutes(authService)
+    val tasksRoutes: TasksRoutes = new TasksRoutes(tasksService)
     val healthRoutes: HealthRoutes = new HealthRoutes()
+
+    println(s"prj_id=1 hash: ${demo1.taskmanagement.lib.hashids.HashidsHandler.encode(1L)}")
+
 
     // integrate all routes
     val allRoutes: Route = Directives.concat(
         healthRoutes.routes,
-        authRoutes.routes
+        authRoutes.routes,
+        tasksRoutes.routes
     )
 
     val corsWrappedRoutes: Route = CorsHandler.wrapWithCors(allRoutes)

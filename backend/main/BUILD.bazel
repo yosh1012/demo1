@@ -5,7 +5,7 @@ scala_binary(
 
     srcs = glob(["*.scala"]),
 
-    main_class = "com.taskmanagement.main.demo1.Main",
+    main_class = "demo1.taskmanagement.main.Main",
 
     resources = glob(["resources/**"]),
 
@@ -28,9 +28,12 @@ scala_binary(
 
         "//backend/lib/http:http",
         "//backend/lib/postgres/users:users",
+        "//backend/lib/postgres/tasks:tasks",
         "//backend/lib/auth:auth",
 
         "//backend/api/v1/auth:api_auth",
+        "//backend/api/v1/me/tasks:api_me_tasks",
         "//backend/api/v1/health:api_health",
+        "//backend/lib/hashids:hashids",
     ],
 )
