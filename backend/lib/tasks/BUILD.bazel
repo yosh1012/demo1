@@ -1,0 +1,19 @@
+load("@rules_scala//scala:scala.bzl", "scala_library")
+
+scala_library(
+    name = "tasks",
+    srcs = glob(["*.scala"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven_demo1//:com_typesafe_scala_logging_scala_logging_2_13",
+        "@maven_demo1//:org_slf4j_slf4j_api",
+        
+        "@maven_demo1//:com_typesafe_play_play_json_2_13",
+        "@maven_demo1//:com_typesafe_play_play_functional_2_13",
+        "@maven_demo1//:com_fasterxml_jackson_core_jackson_core",
+        "@maven_demo1//:com_fasterxml_jackson_core_jackson_databind",
+
+        "//backend/lib/postgres/tasks:tasks",
+        "//backend/lib/hashids:hashids",
+    ]
+)
