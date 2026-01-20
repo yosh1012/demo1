@@ -25,7 +25,7 @@ demo1-db {
     profile = "slick.jdbc.PostgresProfile$" # references singleton$
     db { # for Hicari Connection Pool
         driver = "org.postgresql.Driver" #jdbc driver / java database connectivity
-        jdbcUrl = "jdbc:postgresql://localhost:5432/demo1"
+        jdbcUrl = "jdbc:postgresql://localhost:5432/demo1?stringtype=unspecified"
         user = "demo1_user"
         password = "*******"
         numThreads = 10
