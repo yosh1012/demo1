@@ -1,0 +1,23 @@
+psql -U demo1_user -d demo1 -h localhost
+
+INSERT INTO users (usr_id, usr_email, usr_hashed_password, usr_is_active, usr_created_at)
+VALUES (2, 'test@example.com', 'dummy_hash', true, CURRENT_TIMESTAMP)
+ON CONFLICT (usr_id) DO NOTHING;
+
+INSERT INTO subscription_plans (spl_id, spl_name, spl_regular_price) 
+VALUES (1, 'Free', 0.00) 
+ON CONFLICT (spl_id) DO NOTHING;
+
+INSERT INTO organizations (org_id, org_name, org_subscription_status, spl_id, usr_id) 
+VALUES (1, 'Test Org', 'active', 1, 2)
+ON CONFLICT (org_id) DO NOTHING;
+
+INSERT INTO workspaces (wks_id, wks_name, org_id) 
+VALUES (1, 'Test Workspace', 1)
+ON CONFLICT (wks_id) DO NOTHING;
+
+INSERT INTO projects (prj_id, prj_name, wks_id) 
+VALUES (1, 'Test Project', 1)
+ON CONFLICT (prj_id) DO NOTHING;
+
+SELECT prj_id, prj_name FROM projects;
