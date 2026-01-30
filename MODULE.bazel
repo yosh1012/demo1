@@ -75,3 +75,19 @@ use_repo(npm, "npm_frontend")
 rules_ts_ext = use_extension("@aspect_rules_ts//ts:extensions.bzl", "ext", dev_dependency = True)
 rules_ts_ext.deps()
 use_repo(rules_ts_ext, "npm_typescript")
+
+# for docker image build
+bazel_dep(name = "rules_oci", version = "1.7.2")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_java",
+    image = "gcr.io/distroless/java17-debian11",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64/v8",
+    ],
+    tag = "latest",
+)
+use_repo(oci, "distroless_java")
