@@ -15,7 +15,7 @@ class TaskRepository(db: Database)(implicit ec: ExecutionContext) {
      * @return Task entity, or Future.failed()
      */
     def findById(id: Long): Future[Option[Task]] = 
-        db.run(tasks.filter(_.tsk_id === id).result.headOption)
+        db.run(tasks.filter(_.tsk_id === id).filter(_.tsk_deleted_at.isEmpty).result.headOption)
 
     /**
      * get task entity list
