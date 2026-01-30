@@ -23,9 +23,14 @@ import demo1.taskmanagement.api.v1.me.tasks.TasksRoutes
 
 object Main extends App with LazyLogging {
 
-    System.setProperty("java.net.preferIPv4Stack", "true") // to use IPv4
+    // System.setProperty("java.net.preferIPv4Stack", "true") // to use IPv4 // commented out because fly.io only supports ipv6
 
     val config: Config = ConfigFactory.load()
+
+    // config debug
+    val jdbcUrl = config.getString("demo1-db.db.jdbcUrl")
+    println(s"DEBUG: jdbcUrl = $jdbcUrl")
+
     val httpInterface: String = config.getString("http.interface")
     val httpPort: Int = config.getInt("http.port")
 

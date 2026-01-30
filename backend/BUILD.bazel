@@ -1,0 +1,21 @@
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+pkg_tar(
+    name = "app_tar",
+    srcs = ["//backend/main:main_deploy.jar"],
+    package_dir = "/app",
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_java",
+    tars = [":app_tar"],
+    entrypoint = ["java", "-jar", "/app/main_deploy.jar"],
+)
+
+oci_tarball(
+    name = "tarball",
+    image = ":image",
+    repo_tags = ["tsumiki-api:latest"],
+)

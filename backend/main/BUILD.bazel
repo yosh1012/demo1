@@ -4,7 +4,7 @@ scala_binary(
     name = "main",
 
     srcs = glob(["*.scala"]),
-
+    visibility = ["//visibility:public"],
     main_class = "demo1.taskmanagement.main.Main",
 
     resources = glob(["resources/**"]),
