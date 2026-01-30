@@ -1,0 +1,18 @@
+app = "tsumiki-api"
+primary_region = "lax"
+
+[env]
+  JAVA_OPTS = "-Xmx256m"
+  DB_JDBC_URL = "jdbc:postgresql://tsumiki-psql.internal:5432/tsumiki"
+  DB_USER = "tsumiki_user"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+
+[[http_service.checks]]
+  path = "/health"
+  interval = "10s"
+  timeout = "2s"

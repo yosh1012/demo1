@@ -1,0 +1,23 @@
+app = "tsumiki-psql"
+primary_region = "lax"
+
+[build]
+  image = "postgres:15-alpine"
+
+[env]
+  POSTGRES_DB = "tsumiki"
+  POSTGRES_USER = "tsumiki_user"
+  PGDATA = "/var/lib/postgresql/data/pgdata"
+
+[experimental]
+  entrypoint = ["sh", "-c", "chown -R postgres:postgres /var/lib/postgresql/data && exec docker-entrypoint.sh postgres"]
+
+[[mounts]]
+  source = "pg_data"
+  destination = "/var/lib/postgresql/data"
+
+[[services]]
+  internal_port = 5432
+  protocol = "tcp"
+  auto_stop_machines = false
+  auto_start_machines = true
