@@ -1,9 +1,10 @@
 app = "tsumiki-api"
 primary_region = "lax"
+swap_size_mb = 512
 
 [env]
-  JAVA_OPTS = "-Xmx256m"
-  DB_JDBC_URL = "jdbc:postgresql://tsumiki-psql.internal:5432/tsumiki"
+  JAVA_OPTS = "-Xmx128m" # 256MB RAM machine
+  DB_JDBC_URL = "jdbc:postgresql://tsumiki-psql.internal:5432/tsumiki?stringtype=unspecified"
   DB_USER = "tsumiki_user"
 
 [http_service]
