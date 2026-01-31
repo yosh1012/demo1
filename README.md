@@ -1,5 +1,11 @@
 # demo1
 
+## Postman demo
+
+https://www.postman.com/supply-architect-44672181/workspace/tsumiki/collection/39834255-59cfe162-df2d-4f9b-91c2-8ffb38bb9876?action=share&creator=39834255
+
+https://api.tsumiki.work/health (health check endpoint. my api is in public for demo)
+
 ## Environment
 
 ### Tech stack
