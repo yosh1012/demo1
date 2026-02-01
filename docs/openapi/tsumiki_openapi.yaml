@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: Tsumiki Task Management API
+  description: A task management API built with Scala, Pekko HTTP, and PostgreSQL
+  version: 1.0.0
+  contact:
+    name: Yoshito Sugiyama
+
+servers:
+  - url: https://api.tsumiki.work
+    description: Production
+
+paths:
+  /health:
+    get:
+      summary: Health Check
+      tags: [System]
+      responses:
+        '200':
+          description: OK
+
+  /auth/signup:
+    post:
+      summary: User Registration
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /auth/login:
+    post:
+      summary: User Login
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /me/projects/{prj_id}/tasks:
+    get:
+      summary: List Tasks
+      tags: [Tasks]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: prj_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{prj_id}}"
+      responses:
+        '200':
+          description: Task list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+
+    post:
+      summary: Create Task
+      tags: [Tasks]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: prj_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{prj_id}}"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreateRequest'
+      responses:
+        '201':
+          description: Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+  /me/projects/{prj_id}/tasks/{tsk_id}:
+    get:
+      summary: Get Task Detail
+      tags: [Tasks]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: prj_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{prj_id}}"
+        - name: tsk_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{tsk_id}}"
+      responses:
+        '200':
+          description: Task detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Task not found
+
+    put:
+      summary: Update Task
+      tags: [Tasks]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: prj_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{prj_id}}"
+        - name: tsk_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{tsk_id}}"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdateRequest'
+      responses:
+        '200':
+          description: Task updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+
+    delete:
+      summary: Delete Task
+      tags: [Tasks]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: prj_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{prj_id}}"
+        - name: tsk_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "{{tsk_id}}"
+      responses:
+        '204':
+          description: Task deleted
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AuthRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        user:
+          $ref: '#/components/schemas/User'
+
+    User:
+      type: object
+      properties:
+        usr_id:
+          type: integer
+        usr_email:
+          type: string
+        usr_last_login_at:
+          type: string
+          format: date-time
+        usr_is_active:
+          type: boolean
+        usr_created_at:
+          type: string
+          format: date-time
+
+    Task:
+      type: object
+      properties:
+        tsk_id:
+          type: string
+        tsk_name:
+          type: string
+        tsk_description:
+          type: string
+        tsk_description_version:
+          type: integer
+        tsk_start_date:
+          type: string
+          format: date
+        tsk_due_date:
+          type: string
+          format: date
+        tsk_status:
+          type: string
+          enum: [todo, in_progress, done]
+        tsk_created_at:
+          type: string
+          format: date-time
+        tsk_updated_at:
+          type: string
+          format: date-time
+        prj_id:
+          type: string
+
+    TaskCreateRequest:
+      type: object
+      required: [tsk_name]
+      properties:
+        tsk_name:
+          type: string
+        tsk_description:
+          type: string
+        tsk_start_date:
+          type: string
+          format: date
+        tsk_due_date:
+          type: string
+          format: date
+
+    TaskUpdateRequest:
+      type: object
+      properties:
+        tsk_name:
+          type: string
+        tsk_description:
+          type: string
+        tsk_status:
+          type: string
+          enum: [todo, in_progress, done]
