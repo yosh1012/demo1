@@ -8,6 +8,8 @@ https://github.com/yosh1012/demo1/blob/d53b06ad504aa1c6bc1d71c4600030803617aaf3/
 DB Schema
 https://github.com/yosh1012/demo1/blob/d53b06ad504aa1c6bc1d71c4600030803617aaf3/database/migrations/V1__initial_schema.sql
 
+finished backend scaffoldings and continously implementing when I have time
+
 ## Postman demo
 
 https://www.postman.com/supply-architect-44672181/workspace/tsumiki/collection/39834255-59cfe162-df2d-4f9b-91c2-8ffb38bb9876?action=share&creator=39834255
